@@ -59,16 +59,21 @@ interface IEndpoint is
      * @param libraryName - string indicating the library name.
      * @param sendModule - address of the library's send module
      * @param receiveModule - address of the library's receive module.
+     * @param sendModulePausedSuccessfully - bool indicating whether the library send module paused successfully
+     * @param receiveModulePausedSuccessfully - bool indicating whether the library receive module paused successfully
+     * 
      */
-    event LibraryPaused(string libraryName, address indexed sendModule, address indexed receiveModule);
+    event LibraryPaused(string libraryName, address indexed sendModule, bool sendModulePausedSuccessfully, address indexed receiveModule, bool receiveModulePausedSuccessfully);
 
     /**
      * @dev - Event emitted when a library is undeprecated
      * @param libraryName - string indicating the library name.
      * @param sendModule - address of the library's send module
      * @param receiveModule - address of the library's receive module.
+     * @param sendModuleUnpausedSuccessfully - bool indicating whether library send module was unpaused successfully
+     * @param receiveModuleUnpausedSuccessfully - bool indicating whether library receive module was unpaused successfully
      */
-    event LibraryUnpaused(string libraryName, address indexed sendModule, address indexed receiveModule);
+    event LibraryUnpaused(string libraryName, address indexed sendModule, bool sendModuleUnpausedSuccessfully, address indexed receiveModule, bool receiveModuleUnpausedSuccessfully);
 
     /**
      * @dev - Event emitted when a library is deprecated.
@@ -126,13 +131,13 @@ interface IEndpoint is
     /**
      * @dev - Event emitted when endpoint delivers message to an app.
      * @param app - address of app message was delivered to
-     * @param senderChainId - uint256 indicating the sender's chain id
+     * @param senderInstanceId - bytes32 indicating the sender's endpoint instance id
      * @param sender - bytes indicating the address of the sender
      *                 (bytes is used since the sender can be on an EVM or non-EVM chain)
      * @param libraryName - string indicating the library name.
      * @param nonce - uint256 indicating the nonce of the message that was passed
      */
     event MessageDeliveredToApp(
-        address indexed app, uint256 indexed senderChainId, bytes sender, string libraryName, uint256 nonce
+        address indexed app, bytes32 indexed senderInstanceId, bytes sender, string libraryName, uint256 nonce
     );
 }

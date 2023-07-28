@@ -42,7 +42,7 @@ interface IEndpointFunctionsForApps {
     /**
      * @dev - Function that allows the application to send message to its designated library to be broadcasted
      *        if it is not self-broadcasting
-     * @param _receiverChainId - uint256 indicating the id of the chain that is receiving the message
+     * @param _receiverInstanceId - bytes32 indicating the instance id of the endpoint that is receiving the message
      * @param _receiver - bytes array indicating the address of the receiver.
      *                    (bytes is used since the receiver can be on an EVM or non-EVM chain)
      * @param _payload - bytes array containing the message payload to be delivered to the receiver
@@ -50,7 +50,7 @@ interface IEndpointFunctionsForApps {
      *                            May be used in the library to enable special functionality.
      */
     function sendMessage(
-        uint256 _receiverChainId,
+        bytes32 _receiverInstanceId,
         bytes calldata _receiver,
         bytes calldata _payload,
         bytes calldata _additionalParams
@@ -59,7 +59,8 @@ interface IEndpointFunctionsForApps {
     /**
      * @dev - Function allows anyone to retry delivering a failed message
      * @param _app - address of the app the message is being delivered to.
-     * @param _senderChainId - uint256 indicating the id of the chain from which the sender is sending the message.
+     * @param _senderInstanceId - bytes32 indicating the instance id of the earlybird endpoint from 
+     *                            which the sender is sending the message.
      * @param _sender - bytes indicating the address of the sender app
      *                  (bytes is used since the sender can be on an EVM or non-EVM chain)
      * @param _nonce - uint256 indicating the nonce or id of the failed message
@@ -67,7 +68,7 @@ interface IEndpointFunctionsForApps {
      */
     function retryDeliveryForFailedMessage(
         address _app,
-        uint256 _senderChainId,
+        bytes32 _senderInstanceId,
         bytes calldata _sender,
         uint256 _nonce,
         bytes calldata _payload,

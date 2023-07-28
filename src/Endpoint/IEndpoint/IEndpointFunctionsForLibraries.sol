@@ -11,7 +11,7 @@ interface IEndpointFunctionsForLibraries {
     /**
      * @dev - Function that allows the library to deliver messages to applications that use it
      * @param _app - address of the app the message is being delivered to.
-     * @param _senderChainId - uint256 indicating the id of the chain from which the message is being sent.
+     * @param _senderInstanceId - bytes32 indicating the instance id of the endpoint from which the message is being sent.
      * @param _sender - bytes array indicating the address of the app sending the message.
      *                  (bytes is used since the receiver can be on an EVM or non-EVM chain)
      * @param _nonce - nonce of the message
@@ -20,7 +20,7 @@ interface IEndpointFunctionsForLibraries {
      */
     function deliverMessageToApp(
         address _app,
-        uint256 _senderChainId,
+        bytes32 _senderInstanceId,
         bytes calldata _sender,
         uint256 _nonce,
         bytes calldata _payload,
@@ -35,6 +35,5 @@ interface IEndpointFunctionsForLibraries {
      * @param _amount - uint256 indicating the amount of tokens that should be transferred.
      */
     function collectTokenFromAppForLibrary(address _app, address _token, address _feeTo, uint256 _amount)
-        external
-        returns (bool);
+        external;
 }

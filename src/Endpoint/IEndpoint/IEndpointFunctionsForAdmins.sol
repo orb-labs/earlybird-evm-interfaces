@@ -9,12 +9,6 @@ pragma solidity ^0.8.17;
  */
 interface IEndpointFunctionsForAdmins {
     /**
-     * @dev - Admin-only function that allows admin to update chainId.
-     * @param _newChainId - uint256 inidicating the new chainId.
-     */
-    function updateChainId(uint256 _newChainId) external;
-
-    /**
      * @dev - Admin-only function that adds a new message library to the endpoint
      * @param _libraryName - name of the library that is being added
      * @param _sendModule - address of the module responsible for sending messages

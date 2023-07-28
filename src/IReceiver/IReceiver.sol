@@ -10,14 +10,14 @@ pragma solidity ^0.8.17;
 interface IReceiver {
     /**
      * @dev - Function that allows the app to receive messages from the endpoint.
-     * @param _senderChainId - uint256 indicating chain id of sender.
+     * @param _senderInstanceId - bytes32 indicating instance id of sender's endpoint.
      * @param _sender - bytes array indicating entity or application that sent the message.
      *                  (bytes is used since the sender can be on an EVM or non-EVM chain)
      * @param _payload - bytes array containing the message being delivered.
      * @param _additionalInfo - bytes array containing additional params library would like passed to the application.
      */
     function receiveMsg(
-        uint256 _senderChainId,
+        bytes32 _senderInstanceId,
         bytes memory _sender,
         uint256 _nonce,
         bytes memory _payload,

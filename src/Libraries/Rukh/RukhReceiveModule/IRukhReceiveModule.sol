@@ -127,13 +127,13 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
      * alreadyFailedDueToWrongRecMsgProofData - bool indicating whether message already failed due to oracle passing
      *                                          wrong recommended msg proof values.
      * disputed - bool indicating whether the message was already disputed or not.
-     * disputeVerdict - uint8 indicating the dispute verdict type.  Look at the DisputeVerdictType enum.
+     * disputeVerdict - DisputeVerdictType indicating the dispute verdict type.  Look at the DisputeVerdictType enum.
      * endOfDisputeResolutionBlock - uint256 indicating the block number when the dispute resolution period ends
      */
     struct MsgProofValidityObject {
         bool alreadyFailedDueToWrongRecMsgProofData;
         bool disputed;
-        uint8 disputeVerdict;
+        DisputeVerdictType disputeVerdict;
         uint128 endOfDisputeResolutionBlock;
     }
 
@@ -148,7 +148,7 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
      *                     it is passing. Value can be retrived from calling the app's recsContract. Messages
      *                     with invalid revealed msg secrets can be rejected by the app. Can be used by third party's disputers or rec
      *                     relayers to self-select which message proofs to pay attention to.
-     * senderChainId - uint256 indicating the sender's chain id.
+     * senderInstanceId - bytes32 indicating the sender's earlybird endpoint instance id.
      * isSelfBroadcastedMsg - bool indicating whether the message was self broadcasted or sent through the endpoint and broadcasted by the send library.
      * sender - bytes array indicating the address of the sender. (bytes is used since the sender can be on an EVM or non-EVM chain)
      * sourceTxnHash - bytes array indicating the source transaction hash.
@@ -159,7 +159,7 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
         uint256 recommendedDisputeTime;
         uint256 recommendedDisputeResolutionExtension;
         bytes32 revealedMsgSecret;
-        uint256 senderChainId;
+        bytes32 senderInstanceId;
         bool isSelfBroadcastedMsg;
         bytes sender;
         bytes sourceTxnHash;
@@ -181,13 +181,13 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
     /**
      * @dev - Struct used to pass msg by app.  This struct is the argument for submitMessages().
      * app - address of app who the messages are being delivered to.
-     * senderChainId - uint256 indicating the index that the hash of msgProofs should be written to.
+     * senderInstanceId - bytes32 indicating the index that the hash of msgProofs should be written to.
      * sender - array of MsgProof Bytes representing message proofs for messages that are being sent to the app.
      * msgsByAggregateProofs - array of msg proofs by aggregate proof hash.
      */
     struct MsgsByApp {
         address app;
-        uint256 senderChainId;
+        bytes32 senderInstanceId;
         bytes sender;
         MsgsByAggregateProof[] msgsByAggregateProofs;
     }
@@ -348,7 +348,7 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
      * @dev - Event emitted when a message being delivered fails.
      * @param app - address of the app message was being sent to.
      * @param msgHash - bytes32 indicating the msg's hash
-     * @param senderChainId - uint256 indicating the chain Id of the sender
+     * @param senderInstanceId - bytes32 indicating the earlybird endpoint instance id of the sender
      * @param sender - bytes array indicating the address of the sender
      * @param nonce - uint256 indicating the nonce of the failed msg
      * @param payload - bytes array indicating the payload of the msg
@@ -358,7 +358,7 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
     event MsgFailed(
         address indexed app,
         bytes32 indexed msgHash,
-        uint256 indexed senderChainId,
+        bytes32 indexed senderInstanceId,
         bytes sender,
         uint256 nonce,
         bytes payload,
@@ -370,24 +370,24 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
      * @dev - Event emitted when a message being delivered fails because it was submitted with wrong rec values.
      * @param app - address of the app message was being sent to.
      * @param msgHash - bytes32 indicating the msg's hash
-     * @param senderChainId - uint256 indicating the chain Id of the sender
+     * @param senderInstanceId - bytes32 indicating the earlybird endpoint instance Id of the sender
      * @param sender - bytes array indicating the address of the sender
      * @param nonce - uint256 indicating the nonce of the failed msg
      */
     event MsgSubmittedWithWrongRecValues(
-        address indexed app, bytes32 msgHash, uint256 indexed senderChainId, bytes sender, uint256 nonce
+        address indexed app, bytes32 msgHash, bytes32 indexed senderInstanceId, bytes sender, uint256 nonce
     );
 
     /**
      * @dev - Event emitted when a message being delivered fails because it was submitted by wrong relayer.
      * @param app - address of the app message was being sent to.
      * @param msgHash - bytes32 indicating the msg's hash
-     * @param senderChainId - uint256 indicating the chain Id of the sender
+     * @param senderInstanceId - bytes32 indicating the earlybird instance Id of the sender
      * @param sender - bytes array indicating the address of the sender
      * @param nonce - uint256 indicating the nonce of the failed msg
      */
     event MsgSubmittedByWrongRelayer(
-        address indexed app, bytes32 msgHash, uint256 indexed senderChainId, bytes sender, uint256 nonce
+        address indexed app, bytes32 msgHash, bytes32 indexed senderInstanceId, bytes sender, uint256 nonce
     );
 
     /**
@@ -410,14 +410,14 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
      * @param _disputedMsgProofHash - bytes32 indicating the hash of the disputed msg proof
      * @param _deliveryBlockNumber - uint256 indicating the block number the disputed msg proof was delivered.
      * @param _msgProof - MsgProof object corresponding to the disputed msg proof.
-     * @param _disputeVerdict - uint256 indicating the dispute verdict.
+     * @param _disputeVerdict - DisputeVerdictType enum indicating the dispute verdict.
      */
     event DisputeResolved(
         address indexed _app,
         bytes32 indexed _disputedMsgProofHash,
         uint256 indexed _deliveryBlockNumber,
         MsgProof _msgProof,
-        uint256 _disputeVerdict
+        DisputeVerdictType _disputeVerdict
     );
 
     /**
@@ -501,14 +501,14 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
      * @param _disputedMsgProofHash - bytes32 indicating the hash of the disputed msg proof
      * @param _deliveryBlockNumber - uint256 indicating the block number the disputed msg proof was delivered.
      * @param _msgProof - MsgProof object corresponding to the disputed msg proof.
-     * @param _disputeVerdict - uint256 indicating the dispute verdict.
+     * @param _disputeVerdict - DisputeVerdictType indicating the dispute verdict.
      */
     function resolveDispute(
         address _app,
         bytes32 _disputedMsgProofHash,
         uint256 _deliveryBlockNumber,
         MsgProof memory _msgProof,
-        uint256 _disputeVerdict
+        DisputeVerdictType _disputeVerdict
     ) external;
 
     /**

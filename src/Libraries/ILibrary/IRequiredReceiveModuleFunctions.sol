@@ -1,4 +1,4 @@
-// src/Libraries/ILibrary/IRequiredReceiveModuleFunctions.sol
+// src/ILibrary/IRequiredReceiveModuleFunctions.sol
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
@@ -13,25 +13,25 @@ import "./IRequiredModuleFunctions.sol";
 interface IRequiredReceiveModuleFunctions is IRequiredModuleFunctions {
     /**
      * @dev - Function that allows the endpoint to get an applications receiveing nonce from the receive module.
-     *        Each app has a different nonce for each sender on each chain from which it receives messages.
+     *        Each app has a different nonce for each sender on each earlybird instance from which it receives messages.
      * @param _app - address of the application that has been receiving the messages
-     * @param _senderChainId - uint256 indicating the id of the sender's chain
+     * @param _senderInstanceId - bytes32 indicating the id of the sender's earlybird instance
      * @param _sender - bytes array indicating the sender's address
      */
-    function getReceivingNonce(address _app, uint256 _senderChainId, bytes memory _sender)
+    function getReceivingNonce(address _app, bytes32 _senderInstanceId, bytes memory _sender)
         external
         view
         returns (uint256);
 
     /**
-     * @dev - Function returns array of hashes of failed messages sent from sender on a senderChainId
+     * @dev - Function returns array of hashes of failed messages sent from sender on a senderInstanceId
      * @param _app - address of the app the message is being delivered to.
-     * @param _senderChainId - uint256 indicating the id of the senderChain
+     * @param _senderInstanceId - bytes32 indicating the id of the sender's earlybird instance
      * @param _sender - bytes indicating the address of the sender
      *                  (bytes is used since the sender can be on an EVM or non-EVM chain)
      * @return noncesOfFailedMsgs - array of bytes32 containing the hashes of failed msgs payloads
      */
-    function getFailedMessageNonces(address _app, uint256 _senderChainId, bytes memory _sender)
+    function getFailedMessageNonces(address _app, bytes32 _senderInstanceId, bytes memory _sender)
         external
         view
         returns (uint256[] memory noncesOfFailedMsgs);
@@ -40,7 +40,7 @@ interface IRequiredReceiveModuleFunctions is IRequiredModuleFunctions {
      * @dev - Function returns fee caller must pay to receive module before they are able to retry
      *        delivering the failed message
      * @param _app - address of the app the message is being delivered to.
-     * @param _senderChainId - uint256 indicating the id of the sender's chain
+     * @param _senderInstanceId - bytes32 indicating the instance id of the sender's earlybird instance
      * @param _sender - bytes indicating the address of the sender
      *                  (bytes is used since the sender can be on an EVM or non-EVM chain)
      * @param _nonce - uint256 indicating the index of the failed message in the array of failed messages
@@ -49,7 +49,7 @@ interface IRequiredReceiveModuleFunctions is IRequiredModuleFunctions {
      *                               they are able to retry delivering the failed message
      * @return relayerThatDeliveredMsg - address of relayer that delivered the failed msg.
      */
-    function getFailedMessageByNonce(address _app, uint256 _senderChainId, bytes memory _sender, uint256 _nonce)
+    function getFailedMessageByNonce(address _app, bytes32 _senderInstanceId, bytes memory _sender, uint256 _nonce)
         external
         view
         returns (bytes32 failedMsgHash, uint256 feeForFailedMessage, address relayerThatDeliveredMsg);
@@ -57,7 +57,7 @@ interface IRequiredReceiveModuleFunctions is IRequiredModuleFunctions {
     /**
      * @dev - Function allows anyone to retry delivering a failed message
      * @param _app - address of the app the message is being delivered to.
-     * @param _senderChainId - uint256 indicating the sender's chain id
+     * @param _senderInstanceId - bytes32 indicating the sender's earlybird instance id
      * @param _sender - bytes indicating the address of the sender
      *                  (bytes is used since the sender can be an EVM or non-EVM chain)
      * @param _nonce - uint256 indicating the nonce or id of the failed message.
@@ -67,7 +67,7 @@ interface IRequiredReceiveModuleFunctions is IRequiredModuleFunctions {
      */
     function retryDeliveryForFailedMessage(
         address _app,
-        uint256 _senderChainId,
+        bytes32 _senderInstanceId,
         bytes memory _sender,
         uint256 _nonce,
         bytes memory _payload,

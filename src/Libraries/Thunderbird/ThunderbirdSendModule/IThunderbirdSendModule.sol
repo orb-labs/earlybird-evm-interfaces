@@ -80,9 +80,9 @@ interface IThunderbirdSendModule is IRequiredSendModuleFunctions {
      * @dev - Event emitted when you send a message
      * @param nonce - uint256 indicating the nonce of the message. The nonce is a unique number given to each message.
      * @param sender - address of the sender
-     * @param senderChainId - uint256 indicating the sender chain Id.
+     * @param senderInstanceId - bytes32 indicating the sender earlybird instance Id.
      * @param receiver - bytes array indicating the address of the receiver
-     * @param receiverChainId - uint256 indicating the receiver chain Id
+     * @param receiverInstanceId - bytes32 indicating the receiver earlybird instance Id
      * @param isOrderedMsg - bool indicating whether message must be delivered in order or not.
      * @param destinationGas - uint256 indicating the amount of gas that the message should be delivered with on the destination.
      * @param payload - bytes array containing message payload
@@ -91,9 +91,9 @@ interface IThunderbirdSendModule is IRequiredSendModuleFunctions {
     event BroadcastMessage(
         uint256 indexed nonce,
         address indexed sender,
-        uint256 senderChainId,
+        bytes32 senderInstanceId,
         bytes receiver,
-        uint256 receiverChainId,
+        bytes32 receiverInstanceId,
         bool isOrderedMsg,
         uint256 destinationGas,
         bytes payload,
@@ -103,9 +103,9 @@ interface IThunderbirdSendModule is IRequiredSendModuleFunctions {
     /**
      * @dev - Event emitted when you self broadcast a message
      * @param nonce - uint256 indicating the nonce of the message. The nonce is a unique number given to each message.
-     * @param senderChainId - uint256 indicating the sender chain Id.
+     * @param senderInstanceId - bytes32 indicating the sender earlybird instance Id.
      * @param receiver - bytes array indicating the address of the receiver
-     * @param receiverChainId - uint256 indicating the receiver chain Id
+     * @param receiverInstanceId - bytes32 indicating the receiver earlybird Id
      * @param isOrderedMsg - bool indicating whether message must be delivered in order or not.
      * @param destinationGas - uint256 indicating the amount of gas that the message should be delivered with on the destination.
      * @param payload - bytes array containing message payload
@@ -113,9 +113,9 @@ interface IThunderbirdSendModule is IRequiredSendModuleFunctions {
      */
     event SelfBroadcastMessage(
         uint256 indexed nonce,
-        uint256 senderChainId,
+        bytes32 senderInstanceId,
         bytes receiver,
-        uint256 receiverChainId,
+        bytes32 receiverInstanceId,
         bool isOrderedMsg,
         uint256 destinationGas,
         bytes payload,
