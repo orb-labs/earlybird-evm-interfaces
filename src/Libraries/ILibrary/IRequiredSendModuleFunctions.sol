@@ -14,7 +14,7 @@ interface IRequiredSendModuleFunctions is IRequiredModuleFunctions {
     /**
      * @dev - Function returns the estimate for sending a message.
      * @param _app - address of the application
-     * @param _receiverInstanceId - bytes32 indicating the receiver's earlybird instance Id
+     * @param _receiverInstanceId - bytes32 indicating the instance id of the receiver's earlybird endpoint
      * @param _receiver - bytes array indicating the address of the receiver
      *                    (bytes is used since the receiver can be on an EVM or non-EVM chain)
      * @param _payload - bytes array containing message payload
@@ -37,7 +37,7 @@ interface IRequiredSendModuleFunctions is IRequiredModuleFunctions {
      *        Each app has a different nonce for each receiver on each earlybird instance to which it sends messages.
      * @param _app - address of the application that has been sending the messages
      * @param _receiverInstanceId - bytes32 indicating the instance id of the receiver's earlybird endpoint
-     * @param _receiver - bytes array indicating the receiver's address
+     * @param _receiver - bytes array indicating the address of the receiver
      */
     function getSendingNonce(address _app, bytes32 _receiverInstanceId, bytes memory _receiver)
         external

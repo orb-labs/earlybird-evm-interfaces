@@ -11,7 +11,7 @@ import "../../ILibrary/IRequiredReceiveModuleFunctions.sol";
  */
 interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
     /**
-     * @dev - Enum representing config type being updated
+     * @dev - Enum representing the app config changes that can be made
      * MIN_DISPUTE_TIME_CHANGE - represents the app's minimum dispute time as the variable being updated.
      * MIN_DISPUTE_RESOLUTION_EXTENSION_CHANGE - represents the app's dispute resolution extension period being updated.
      * DISPUTE_EPOCH_LENGTH_CHANGE - represents the app's dispute epoch length being updated.
@@ -26,7 +26,7 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
      * MSG_DELIVERY_PAUSED_STATUS_CHANGE - represents the app's msg delivery status being updated.
      * ORDERED_MSG_NONCE_CHANGE - represents the app's ordered msg nonce being updated.
      */
-    enum ConfigType {
+    enum ConfigUpdateType {
         MIN_DISPUTE_TIME_CHANGE,
         MIN_DISPUTE_RESOLUTION_EXTENSION_CHANGE,
         DISPUTE_EPOCH_LENGTH_CHANGE,
@@ -71,14 +71,14 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
     }
 
     /**
-     * @dev - Struct that represents an app's setting within the Rukh receive module
+     * @dev - Struct that represents an app config within the Rukh receive module
      * minDisputeTime - uint256 indicating the minimum dispute time for each message.
      *                  The recommended dispute time passed by the oracle must exceed this number.
      * minDisputeResolutionExtension - uint256 indicating how long the dispute resolution period should be extended after each dispute.
      * disputeEpochLength - uint256 indicating the number of blocks in a dispute epoch.
      * maxValidDisputesPerEpoch - uint256 indicating the maximum number of valid disputes that can occur in a dispute
      *                            epoch before the library assumes that the oracle has been compromised and pauses msg delivery.
-     * oracle - address of app's selected oracle
+     * oracle - address of oracle from which the app receives message proofs
      * defaultRelayer - address of app's default relayer.  The default relayer is typically responsible for passing
      *                  messages to the app except if the application has configured another relayer to pass messages
      *                  through the variable configs contract.
@@ -91,7 +91,7 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
      * msgDeliveryPaused - bool indicating whether msg delivery is paused or not. If paused, the library will not accept new msg
      *                     proofs or deliver messages to the app.
      */
-    struct AppSettings {
+    struct AppConfig {
         uint256 minDisputeTime;
         uint256 minDisputeResolutionExtension;
         uint256 disputeEpochLength;

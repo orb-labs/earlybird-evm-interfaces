@@ -14,7 +14,7 @@ pragma solidity ^0.8.17;
 interface IRecsContractForThunderbirdReceiveModule {
     /**
      * @dev - function returns the amount an oracle is willing to charge for passing a message
-     * @param _senderInstanceId - bytes32 indicating the receiver's earlybird endpoint instance Id
+     * @param _senderInstanceId - bytes32 indicating the id of the sender's earlybird instance
      * @param _sender - bytes array indicating the address of the receiver
      * @param _nonce - uint256 indicating the nonce
      * @param _payload - bytes array containing message payload
@@ -28,7 +28,7 @@ interface IRecsContractForThunderbirdReceiveModule {
 
     /**
      * @dev - function returns the amount an oracle is willing to charge for passing a message
-     * @param _senderInstanceId - bytes32 indicating the receiver's earlybird endpoint instance Id
+     * @param _senderInstanceId - bytes32 indicating the id of the sender's earlybird instance
      * @param _sender - bytes array indicating the address of the receiver
      * @param _nonce - uint256 indicating the nonce
      * @param _payload - bytes array containing message payload

@@ -10,7 +10,7 @@ pragma solidity ^0.8.17;
 interface IReceiver {
     /**
      * @dev - Function that allows the app to receive messages from the endpoint.
-     * @param _senderInstanceId - bytes32 indicating instance id of sender's endpoint.
+     * @param _senderInstanceId - bytes32 indicating the id of the sender's earlybird instance
      * @param _sender - bytes array indicating entity or application that sent the message.
      *                  (bytes is used since the sender can be on an EVM or non-EVM chain)
      * @param _payload - bytes array containing the message being delivered.

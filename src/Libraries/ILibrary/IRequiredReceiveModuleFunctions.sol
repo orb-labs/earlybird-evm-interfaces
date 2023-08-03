@@ -40,7 +40,7 @@ interface IRequiredReceiveModuleFunctions is IRequiredModuleFunctions {
      * @dev - Function returns fee caller must pay to receive module before they are able to retry
      *        delivering the failed message
      * @param _app - address of the app the message is being delivered to.
-     * @param _senderInstanceId - bytes32 indicating the instance id of the sender's earlybird instance
+     * @param _senderInstanceId - bytes32 indicating the id of the sender's earlybird instance
      * @param _sender - bytes indicating the address of the sender
      *                  (bytes is used since the sender can be on an EVM or non-EVM chain)
      * @param _nonce - uint256 indicating the index of the failed message in the array of failed messages
@@ -57,7 +57,7 @@ interface IRequiredReceiveModuleFunctions is IRequiredModuleFunctions {
     /**
      * @dev - Function allows anyone to retry delivering a failed message
      * @param _app - address of the app the message is being delivered to.
-     * @param _senderInstanceId - bytes32 indicating the sender's earlybird instance id
+     * @param _senderInstanceId - bytes32 indicating the id of the sender's earlybird instance
      * @param _sender - bytes indicating the address of the sender
      *                  (bytes is used since the sender can be an EVM or non-EVM chain)
      * @param _nonce - uint256 indicating the nonce or id of the failed message.

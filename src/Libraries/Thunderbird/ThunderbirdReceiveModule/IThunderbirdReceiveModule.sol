@@ -11,7 +11,7 @@ import "../../ILibrary/IRequiredReceiveModuleFunctions.sol";
  */
 interface IThunderbirdReceiveModule is IRequiredReceiveModuleFunctions {
     /**
-     * @dev - Enum representing config type being updated
+     * @dev - Enum representing the app config changes that can be made
      * ORACLE_CHANGE - represents the app's oracle being updated.
      * RELAYER_CHANGE - represents the app's default relayer being updated.
      * RECS_CONTRACT_CHANGE - represents the app's default recommendations contract being updated.
@@ -20,7 +20,7 @@ interface IThunderbirdReceiveModule is IRequiredReceiveModuleFunctions {
      * MSG_DELIVERY_PAUSED_STATUS_CHANGE - represents the app's msg delivery status being updated.
      * NONCE_CHANGE - represents the app's msg nonce being updated.
      */
-    enum ConfigType {
+    enum ConfigUpdateType {
         ORACLE_CHANGE,
         RELAYER_CHANGE,
         RECS_CONTRACT_CHANGE,
@@ -47,19 +47,21 @@ interface IThunderbirdReceiveModule is IRequiredReceiveModuleFunctions {
     }
 
     /**
-     * @dev - Struct that represents an app's setting within the Thunderbird receive module
-     * oracle - address of app's selected oracle
-     * relayer - address of app's selected relayer
+     * @dev - Struct that represents an app config within the Thunderbird receive module
+     * oracle - address of oracle from which the app receives message proofs
+     * defaultRelayer - address of app's default relayer.  The default relayer is typically responsible for passing
+     *                  messages to the app except if the application has configured another relayer to pass messages
+     *                  through the variable configs contract.
      * recsContract - address of the contract we can call for recommendations for the values we should pass with the msg proof.
      *                i.e. msg revealed secret, recommended relayer.
-     * emitMsgProofs - bool indicating whether the protocol should broadcast msg proofs when they are submitted by an oracle.
+     * emitMsgProofs - bool indicating whether the protocol should broadcast contents of msg proofs when an oracle submits them.
      * directMsgsEnabled - bool indicating whether the receive module should deliver messages to the app directly or not.
      * msgDeliveryPaused - bool indicating whether msg delivery is paused or not. If paused, the library will not accept new msg
      *                     proofs or deliver messages to the app.
      */
-    struct AppSettings {
+    struct AppConfig {
         address oracle;
-        address relayer;
+        address defaultRelayer;
         address recsContract;
         bool emitMsgProofs;
         bool directMsgsEnabled;
