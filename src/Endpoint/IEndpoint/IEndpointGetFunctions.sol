@@ -85,9 +85,9 @@ interface IEndpointGetFunctions {
     /**
      * @dev - Function returns the app's send module configs
      * @param _app - Address of the application
-     * @return appConfigForSendModule - bytes containing an app's send module configs
+     * @return appConfigForSending - bytes containing an app's send module configs
      */
-    function getAppConfigForSending(address _app) external returns (bytes memory appConfigForSendModule);
+    function getAppConfigForSending(address _app) external returns (bytes memory appConfigForSending);
 
     /**
      * @dev - Function returns the app's app config from the receive module
