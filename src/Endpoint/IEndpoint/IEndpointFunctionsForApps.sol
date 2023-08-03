@@ -9,45 +9,42 @@ pragma solidity ^0.8.17;
  */
 interface IEndpointFunctionsForApps {
     /**
-     * @dev - Function that allows application to select its send and receive module
-     *        and set their initial configs
-     * @param _libraryName - name of the library the application is selecting.
-     * @param _sendModuleConfigs - bytes array containing encoded configs to be
-     *                             passed to the send module on the applications behalf
-     * @param _receiveModuleConfigs - bytes array containing encoded configs to be passed
-     *                                to the receive module on the applications behalf
-     * @return sendModule - address of the sendModule
-     * @return receiveModule - address of the receiveModule
+     * @dev - Function to select a library and set app config for the library's
+     *        send and receive module for a given application
+     * @param _libraryName - string of the name of the library the application will use to send messages
+     * @param _appConfigForSending - bytes array containing encoded app config for the send module
+     * @param _appConfigForReceiving - bytes array containing encoded app config for the receive module
+     * @return sendModule - address of the selected library's sendModule
+     * @return receiveModule - address of the selected library's receiveModule
      */
     function setLibraryAndConfigs(
         string calldata _libraryName,
-        bytes calldata _sendModuleConfigs,
-        bytes calldata _receiveModuleConfigs
+        bytes calldata _appConfigForSending,
+        bytes calldata _appConfigForReceiving
     ) external returns (address sendModule, address receiveModule);
 
     /**
-     * @dev - Function that allows application to update its library's send module configs
-     * @param _sendModuleConfigs - bytes array containing encoded configs to be passed to
+     * @dev - Function for updating an app config on a given library's send module
+     * @param _appConfigForSending - bytes array containing encoded configs to be passed to
      *                             the send module on the applications behalf
      */
-    function updateSendModuleConfigs(bytes calldata _sendModuleConfigs) external;
+    function updateAppConfigForSending(bytes calldata _appConfigForSending) external;
 
     /**
      * @dev - Function that allows application to update its library's receive module configs
-     * @param _receiveModuleConfigs - bytes array containing encoded configs to be passed
+     * @param _appConfigForReceiving - bytes array containing encoded configs to be passed
      *                                to the receive module on the applications behalf
      */
-    function updateReceiveModuleConfigs(bytes calldata _receiveModuleConfigs) external;
+    function updateAppConfigForReceiving(bytes calldata _appConfigForReceiving) external;
 
     /**
-     * @dev - Function that allows the application to send message to its designated library to be broadcasted
-     *        if it is not self-broadcasting
+     * @dev - Function for applications to send a message to be broadcast by its selected library's send module
      * @param _receiverInstanceId - bytes32 indicating the instance id of the endpoint that is receiving the message
-     * @param _receiver - bytes array indicating the address of the receiver.
+     * @param _receiver - bytes array indicating the address of the receiver
      *                    (bytes is used since the receiver can be on an EVM or non-EVM chain)
      * @param _payload - bytes array containing the message payload to be delivered to the receiver
-     * @param _additionalParams - bytes array containing additional params application would like to passed to the library.
-     *                            May be used in the library to enable special functionality.
+     * @param _additionalParams - bytes array containing additional params application would like to passed to the library
+     *                            May be used in the library to enable special functionality
      */
     function sendMessage(
         bytes32 _receiverInstanceId,
@@ -58,7 +55,7 @@ interface IEndpointFunctionsForApps {
 
     /**
      * @dev - Function allows anyone to retry delivering a failed message
-     * @param _app - address of the app the message is being delivered to.
+     * @param _app - address of the app where the message is to be delivered
      * @param _senderInstanceId - bytes32 indicating the instance id of the earlybird endpoint from 
      *                            which the sender is sending the message.
      * @param _sender - bytes indicating the address of the sender app

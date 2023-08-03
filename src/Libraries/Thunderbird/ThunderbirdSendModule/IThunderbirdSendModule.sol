@@ -11,13 +11,13 @@ import "../../ILibrary/IRequiredSendModuleFunctions.sol";
  */
 interface IThunderbirdSendModule is IRequiredSendModuleFunctions {
     /**
-     * @dev - Enum representing config type the app would like updated.
+     * @dev - Enum representing the types of app config updates that can be made
      * BROADCAST_STATUS_CHANGE - represents broadcasting status being updated
      * ORACLE_CHANGE - represents oracle address being updated
      * RELAYER_CHANGE - represents relayer address being updated
      * NONCE_CHANGE - represents the app's msg nonce being updated.
      */
-    enum ConfigType {
+    enum ConfigUpdateType {
         BROADCAST_STATUS_CHANGE,
         ORACLE_CHANGE,
         RELAYER_CHANGE,
@@ -43,12 +43,12 @@ interface IThunderbirdSendModule is IRequiredSendModuleFunctions {
     }
 
     /**
-     * @dev - Struct representing an app's settings
+     * @dev - Struct that represents an app config within the Thunderbird send module
      * isSelfBroadcasting - bool on whether the app is self broadcasting or not.
      * oracleFeeCollector - address to which the app will pay oracle fees
      * relayerFeeCollector - address to which the app will pay relayer fees
      */
-    struct AppSettings {
+    struct AppConfig {
         bool isSelfBroadcasting;
         address oracleFeeCollector;
         address relayerFeeCollector;

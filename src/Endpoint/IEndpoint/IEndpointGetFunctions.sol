@@ -85,16 +85,16 @@ interface IEndpointGetFunctions {
     /**
      * @dev - Function returns the app's send module configs
      * @param _app - Address of the application
-     * @return sendModuleConfigs - bytes containing an app's send module configs
+     * @return appConfigForSendModule - bytes containing an app's send module configs
      */
-    function getSendModuleConfigs(address _app) external returns (bytes memory sendModuleConfigs);
+    function getAppConfigForSending(address _app) external returns (bytes memory appConfigForSendModule);
 
     /**
-     * @dev - Function returns the app's receive module configs
+     * @dev - Function returns the app's app config from the receive module
      * @param _app - Address of the application
-     * @return receiveModuleConfigs - bytes containing an app's receive module configs
+     * @return appConfigForReceiving - bytes containing the app's app config from the receive module
      */
-    function getReceiveModuleConfigs(address _app) external returns (bytes memory receiveModuleConfigs);
+    function getAppConfigForReceiving(address _app) external returns (bytes memory appConfigForReceiving);
 
     /**
      * @dev - Function returns the sending nonce for app when it is sending messages to the receiver on the receiverInstanceId

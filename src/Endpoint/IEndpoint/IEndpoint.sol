@@ -100,41 +100,41 @@ interface IEndpoint is
     event ProtocolFeeSettingsUpdated(string libraryName, uint256 indexed moduleType, bytes protocolFeeSettings);
 
     /**
-     * @dev - Event emitted when an app's library selects and configures a library
-     * @param app - address of the app selecting and passing its configs to the library
-     * @param libraryName - string indicating the library name.
+     * @dev - Event emitted when a library is selected and app config created for an app
+     * @param app - address of the app
+     * @param libraryName - string indicating the name of the selected library
      */
     event AppLibraryAndConfigsSet(address indexed app, string libraryName);
 
     /**
-     * @dev - Event emitted when an app updates its selected library's send module configs.
-     * @param app - address of the app selecting and passing its configs to the library
-     * @param libraryName - string indicating the library name.
+     * @dev - Event emitted when an app updates its app config for sending messages over a given library
+     * @param app - address of the app
+     * @param libraryName - string indicating the library name
      * @param sendModule - address of the library's send module
-     * @param sendModuleConfigs - bytes indicating encoded send module configs
+     * @param appConfigForSending - bytes of encoded app configs for the send module
      */
     event AppSendModuleConfigsUpdated(
-        address indexed app, string libraryName, address indexed sendModule, bytes sendModuleConfigs
+        address indexed app, string libraryName, address indexed sendModule, bytes appConfigForSending
     );
 
     /**
-     * @dev - Event emitted when an app updates its selected library's receive module configs.
-     * @param app - address of the app selecting and passing its configs to the library
-     * @param libraryName - string indicating the library name.
+     * @dev - Event emitted when an app updates its app config for receiving messages over a given library
+     * @param app - address of the app
+     * @param libraryName - string indicating the library name
      * @param receiveModule - address of the library's receive module
-     * @param receiveModuleConfigs - bytes indicating encoded receive module configs
+     * @param appConfigForReceiving - bytes of encoded app configs for the receive module
      */
     event AppReceiveModuleConfigsUpdated(
-        address indexed app, string libraryName, address indexed receiveModule, bytes receiveModuleConfigs
+        address indexed app, string libraryName, address indexed receiveModule, bytes appConfigForReceiving
     );
 
     /**
-     * @dev - Event emitted when endpoint delivers message to an app.
-     * @param app - address of app message was delivered to
+     * @dev - Event emitted when endpoint delivers message to an app
+     * @param app - address of app where message was delivered
      * @param senderInstanceId - bytes32 indicating the sender's endpoint instance id
      * @param sender - bytes indicating the address of the sender
      *                 (bytes is used since the sender can be on an EVM or non-EVM chain)
-     * @param libraryName - string indicating the library name.
+     * @param libraryName - string indicating the library name
      * @param nonce - uint256 indicating the nonce of the message that was passed
      */
     event MessageDeliveredToApp(
