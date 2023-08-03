@@ -48,8 +48,8 @@ interface IRukhSendModule is IRequiredSendModuleFunctions {
      */
     struct AppConfig {
         bool isSelfBroadcasting;
-        address oracle;
-        address relayer;
+        address oracleFeeCollector;
+        address relayerFeeCollector;
     }
 
     /**
