@@ -43,13 +43,13 @@ interface IRukhSendModule is IRequiredSendModuleFunctions {
     /**
      * @dev - Struct representing an app's settings
      * isSelfBroadcasting - bool on whether the app is self broadcasting or not.
-     * oracle - address of app's selected oracle revenue collection service
-     * relayer - address of app's selected relayer revenue collection service
+     * oracleFeeCollector - address to which the app will pay oracle fees
+     * relayerFeeCollector - address to which the app will pay relayer fees
      */
     struct AppSettings {
         bool isSelfBroadcasting;
-        address oracle;
-        address relayer;
+        address oracleFeeCollector;
+        address relayerFeeCollector;
     }
 
     /**
@@ -123,16 +123,16 @@ interface IRukhSendModule is IRequiredSendModuleFunctions {
     /**
      * @dev - Event emitted when you self broadcast a message
      * @param msgHash - hash of the msg that the app delivered
-     * @param oracle - oracle address
-     * @param relayer - relayer address
+     * @param oracleFeeCollector - address to which oracle fees were paid
+     * @param relayerFeeCollector - address to which relayer fees were paid
      * @param feeToken - token that the fee was paid in
      * @param oracleFee - fee paid to the oracle
      * @param relayerFee - fee paid to the relayer
      */
     event OracleAndRelayerPaid(
         bytes32 indexed msgHash,
-        address indexed oracle,
-        address indexed relayer,
+        address indexed oracleFeeCollector,
+        address indexed relayerFeeCollector,
         address feeToken,
         uint256 oracleFee,
         uint256 relayerFee
