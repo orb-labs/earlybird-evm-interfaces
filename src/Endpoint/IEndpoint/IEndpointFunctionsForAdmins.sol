@@ -10,7 +10,7 @@ pragma solidity ^0.8.17;
 interface IEndpointFunctionsForAdmins {
     /**
      * @dev - Admin-only function that adds a new message library to the endpoint
-     * @param _libraryName - name of the library that is being added
+     * @param _libraryName - string of the name of the library that is being added
      * @param _sendModule - address of the module responsible for sending messages
      * @param _receiveModule - address of the module responsible for receiving messages
      */
@@ -18,31 +18,31 @@ interface IEndpointFunctionsForAdmins {
 
     /**
      * @dev - Admin-only function that allows endpoint admin to pause a library
-     * @param _libraryName - name of the library that is being paused
+     * @param _libraryName - string of the name of the library that is being paused
      */
     function pauseLibrary(string calldata _libraryName) external;
 
     /**
      * @dev - Admin-only function that allows endpoint admin to unpause a library
-     * @param _libraryName - name of the library that is being unpaused
+     * @param _libraryName - string of the name of the library that is being unpaused
      */
     function unpauseLibrary(string calldata _libraryName) external;
 
     /**
      * @dev - Admin-only function that adds a new inbound message library to the endpoint
-     * @param _libraryName - name of the library that is being deprecated
+     * @param _libraryName - string of the name of the library that is being deprecated
      */
     function deprecateLibrary(string calldata _libraryName) external;
 
     /**
      * @dev - Admin-only function that adds a new inbound message library to the endpoint
-     * @param _libraryName - name of the library that is being undeprecated
+     * @param _libraryName - string of the name of the library that is being undeprecated
      */
     function undeprecateLibrary(string calldata _libraryName) external;
 
     /**
      * @dev - Admin-only function that allows admin to update protocol library fees
-     * @param _libraryName - name of the library that is being added
+     * @param _libraryName - string of the name of the library that is being added
      * @param _moduleType - uint256 indicating whether its the sendModule or
      *                      receiveModule whose settings are being updated
      * @param _protocolFeeSettings - bytes value indicating the encoded protocol fee settings
