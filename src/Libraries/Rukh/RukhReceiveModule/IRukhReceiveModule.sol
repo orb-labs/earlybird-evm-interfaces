@@ -232,7 +232,7 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
      * @dev - Struct used to pass msg data what is used to recreate msg proof and deliver messages.
      *        This struct is a field in MsgsByAggregateProof which is used in MsgsByApp which is used submitMessages.
      * deliveryBlock - uint256 indicating the block number the message's msgProof was delivered.
-     * recommendedDisputeTime - uint256 indicating the recommended dispute time that was supplied when creating the msg proof.
+     * recommendedDisputeTime - uint256 indicating the recommended dispute time in block numbers that was supplied when creating the msg proof.
      * recommendedDisputeResolutionExtension - uint256 indicating the recommended dispute resolution extension period.
      * revealedMsgSecret - bytes32 indicating the revealed msg secret that was provided when supplying the message proof.
      * relayerRecommendedGas - the amount of gas the relayer recommends the message should be passed with.  It cannot be less than destinationGas
