@@ -97,6 +97,13 @@ interface IEndpointGetFunctions {
     function getAppConfigForReceiving(address _app) external returns (bytes memory appConfigForReceiving);
 
     /**
+     * @dev - Function returns the app's dynamic settings contract for the current library
+     * @param _app - Address of the application
+     * @return dynamicSettingsContract - address indicating the dynamic settings contract for the app
+     */
+    function getAppDynamicSettingsContract(address _app) external returns (bytes memory dynamicSettingsContract);
+
+    /**
      * @dev - Function returns the sending nonce for app when it is sending messages to the receiver on the receiverInstanceId
      *        through libraryName. App has a different nonce for each receiver on each endpoint instance to which it sends messages.
      * @param _libraryName - string indicating name of the library whose sending library nonce is being returned
