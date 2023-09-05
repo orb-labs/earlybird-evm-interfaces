@@ -101,7 +101,7 @@ interface IEndpointGetFunctions {
      * @param _app - Address of the application
      * @return dynamicSettingsContract - address indicating the dynamic settings contract for the app
      */
-    function getAppDynamicSettingsContract(address _app) external returns (bytes memory dynamicSettingsContract);
+    function getAppDynamicSettingsContract(address _app) external returns (address dynamicSettingsContract);
 
     /**
      * @dev - Function returns the sending nonce for app when it is sending messages to the receiver on the receiverInstanceId
