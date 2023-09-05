@@ -87,21 +87,21 @@ interface IEndpointGetFunctions {
      * @param _app - Address of the application
      * @return appConfigForSending - bytes containing an app's send module configs
      */
-    function getAppConfigForSending(address _app) external returns (bytes memory appConfigForSending);
+    function getAppConfigForSending(address _app) external view returns (bytes memory appConfigForSending);
 
     /**
      * @dev - Function returns the app's app config from the receive module
      * @param _app - Address of the application
      * @return appConfigForReceiving - bytes containing the app's app config from the receive module
      */
-    function getAppConfigForReceiving(address _app) external returns (bytes memory appConfigForReceiving);
+    function getAppConfigForReceiving(address _app) external view returns (bytes memory appConfigForReceiving);
 
     /**
      * @dev - Function returns the app's dynamic settings contract for the current library
      * @param _app - Address of the application
      * @return dynamicSettingsContract - address indicating the dynamic settings contract for the app
      */
-    function getAppDynamicSettingsContract(address _app) external returns (address dynamicSettingsContract);
+    function getAppDynamicSettingsContract(address _app) external view returns (address dynamicSettingsContract);
 
     /**
      * @dev - Function returns the sending nonce for app when it is sending messages to the receiver on the receiverInstanceId
