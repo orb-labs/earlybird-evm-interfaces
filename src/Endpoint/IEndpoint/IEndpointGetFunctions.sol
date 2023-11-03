@@ -97,13 +97,6 @@ interface IEndpointGetFunctions {
     function getAppConfigForReceiving(address _app) external view returns (bytes memory appConfigForReceiving);
 
     /**
-     * @dev - Function returns the app's dynamic settings contract for the current library
-     * @param _app - Address of the application
-     * @return dynamicSettingsContract - address indicating the dynamic settings contract for the app
-     */
-    function getAppDynamicSettingsContract(address _app) external view returns (address dynamicSettingsContract);
-
-    /**
      * @dev - Function returns the sending nonce for app when it is sending messages to the receiver on the receiverInstanceId
      *        through libraryName. App has a different nonce for each receiver on each endpoint instance to which it sends messages.
      * @param _libraryName - string indicating name of the library whose sending library nonce is being returned
@@ -147,7 +140,7 @@ interface IEndpointGetFunctions {
      * @return isTokenAccepted - bool indicating whether the token passed in the additional params is accepted
      * @return feeEstimate - uint256 indicating the sendingFeeEstimate
      */
-    function getSendingFeeEstimate(
+    function getEstimatedFeeForSending(
         address _app,
         bytes32 _receiverInstanceId,
         bytes calldata _receiver,
@@ -171,6 +164,37 @@ interface IEndpointGetFunctions {
         bytes calldata _receiver,
         bytes calldata _payload
     ) external view returns (address[] memory acceptedTokens);
+
+    /**
+     * @dev - Function returns whether a token is accepted for fees and the amount of the tokens
+     *        the app would have to pay in fees for an already delivered message.
+     * @param _receiverApp - Address of the app receiving the message.
+     * @param _senderInstanceId - bytes32 indicating the sender's endpoint instance Id
+     * @param _sender - bytes array indicating the address of the sender
+     *                    (bytes is used since the sender can be on an EVM or non-EVM chain)
+     * @param _payload - bytes array containing message payload
+     * @param _additionalParams - bytes array containing additional params that was delivered with the message on the source.
+     * @return isTokenAccepted - bool indicating whether the token passed in the additional params is accepted
+     * @return feeEstimate - uint256 indicating the sendingFeeEstimate
+     */
+    function getEstimatedFeeForDeliveredMessage(
+        address _receiverApp,
+        bytes32 _senderInstanceId,
+        bytes calldata _sender,
+        bytes calldata _payload,
+        bytes calldata _additionalParams
+    ) external view returns (bool isTokenAccepted, uint256 feeEstimate);
+
+    /**
+     * @dev - Function returns whether a token is accepted for a bookmarked fee and the amount of the tokens
+     *        needed to pay back the bookmarked fee
+     * @param _receiverApp - address indicating the receiver app
+     * @param _msgHash - bytes32 indicating the msg hash
+     * @param _feeToken - address indicating the fee token
+     * @return isTokenAccepted - bool indicating whether the token passed in the additional params is accepted
+     * @return fee - uint256 indicating the bookmarked fee
+     */
+    function getBookmarkedFee(address _receiverApp, address _feeToken, bytes32 _msgHash) external view returns (bool isTokenAccepted, uint256 fee);
 
     /**
      * @dev - Function returns fee caller must pay before they are able to retry delivering the failed message

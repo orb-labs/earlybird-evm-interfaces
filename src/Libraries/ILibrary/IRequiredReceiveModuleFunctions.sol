@@ -24,15 +24,6 @@ interface IRequiredReceiveModuleFunctions is IRequiredModuleFunctions {
         returns (uint256);
 
     /**
-     * @dev - Function that allows the endpoint to get an applications dynamic settings contract i.e. the recs contract
-     * @param _app - address of the application that has been receiving the messages
-     */
-    function getDynamicSettingsContract(address _app)
-        external
-        view
-        returns (address);
-
-    /**
      * @dev - Function returns array of hashes of failed messages sent from sender on a senderInstanceId
      * @param _app - address of the app the message is being delivered to.
      * @param _senderInstanceId - bytes32 indicating the id of the sender's earlybird instance

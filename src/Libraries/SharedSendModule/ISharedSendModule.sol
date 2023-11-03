@@ -1,15 +1,15 @@
-// src/Libraries/Rukh/RukhSendModule/IRukhSendModule.sol
+// src/Libraries/SharedSendModule/ISharedSendModule.sol
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
-import "../../ILibrary/IRequiredSendModuleFunctions.sol";
+import "../ILibrary/IRequiredSendModuleFunctions.sol";
 
 /**
  * @author - Orb Labs
- * @title  - IRukhSendModule
- * @notice - Interface for Rukh library's send module
+ * @title  - ISharedSendModule
+ * @notice - Interface for a shared send module for the Rukh and Thunderbird libraries
  */
-interface IRukhSendModule is IRequiredSendModuleFunctions {
+interface ISharedSendModule is IRequiredSendModuleFunctions {
     /**
      * @dev - Enum representing the types of app config updates that can be made
      * BROADCAST_STATUS_CHANGE - represents broadcasting status being updated
@@ -41,7 +41,7 @@ interface IRukhSendModule is IRequiredSendModuleFunctions {
     }
 
     /**
-     * @dev - Struct that represents an app config within the Rukh send module
+     * @dev - Struct that represents an app config within the shared send module
      * isSelfBroadcasting - bool on whether the app is self broadcasting or not.
      * oracleFeeCollector - address to which the app will pay oracle fees
      * relayerFeeCollector - address to which the app will pay relayer fees
@@ -67,11 +67,15 @@ interface IRukhSendModule is IRequiredSendModuleFunctions {
      * address feeToken - address of the token being used to pay fees.
      * isOrderedMsg - bool indicating whether the message is an ordered msg or not.
      * destinationGas - uint256 indicating the gas to deliver the message with on the destination
+     * expectedRelayer - address indicating the fee collector for the expected relayer on the destination. 
+     *                   If the expected relayer is the default relayer, supply address(0) or the default relayer fee collector.
+     *                   If its anyone else, supply their fee collector.
      */
     struct AdditionalParams {
         address feeToken;
         bool isOrderedMsg;
         uint256 destinationGas;
+        address expectedRelayerFeeCollector;
     }
 
     /**
