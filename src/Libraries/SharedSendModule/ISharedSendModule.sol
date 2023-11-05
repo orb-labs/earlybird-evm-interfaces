@@ -67,7 +67,7 @@ interface ISharedSendModule is IRequiredSendModuleFunctions {
      * address feeToken - address of the token being used to pay fees.
      * isOrderedMsg - bool indicating whether the message is an ordered msg or not.
      * destinationGas - uint256 indicating the gas to deliver the message with on the destination
-     * expectedRelayer - address indicating the fee collector for the expected relayer on the destination. 
+     * expectedRelayer - address indicating the fee collector for the expected relayer on the destination.
      *                   If the expected relayer is the default relayer, supply address(0) or the default relayer fee collector.
      *                   If its anyone else, supply their fee collector.
      */

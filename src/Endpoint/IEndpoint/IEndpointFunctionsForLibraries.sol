@@ -34,6 +34,5 @@ interface IEndpointFunctionsForLibraries {
      * @param _feeTo - address of the person the tokens should be transferred to
      * @param _amount - uint256 indicating the amount of tokens that should be transferred.
      */
-    function collectTokenFromAppForLibrary(address _app, address _token, address _feeTo, uint256 _amount)
-        external;
+    function collectTokenFromAppForLibrary(address _app, address _token, address _feeTo, uint256 _amount) external;
 }

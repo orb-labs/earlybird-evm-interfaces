@@ -88,10 +88,13 @@ interface IFeeCollector {
      * @return isTokenAccepted - bool indicating whether the token passed in the additional params is accepted
      * @return fee - uint256 indicating the bookmarked fee
      */
-    function getBookmarkedFee(address _receiverApp, address _feeToken, bytes32 _msgHash) external view returns (bool isTokenAccepted, uint256 fee);
+    function getBookmarkedFee(address _receiverApp, address _feeToken, bytes32 _msgHash)
+        external
+        view
+        returns (bool isTokenAccepted, uint256 fee);
 
     /**
-     * @dev - function that lets the fee collector know that fee has been paid to send a particular message. 
+     * @dev - function that lets the fee collector know that fee has been paid to send a particular message.
      *        Used by fee collector to specific functions related to fee payments be it paying a recommended
      *        relayer or sending funds to a fee to address.
      * @param _app - Address of the application
@@ -110,7 +113,7 @@ interface IFeeCollector {
     ) external;
 
     /**
-     * @dev - function that lets the fee collector know that fee has been paid for a delivered msg. 
+     * @dev - function that lets the fee collector know that fee has been paid for a delivered msg.
      *        Used by fee collector to specific functions related to fee payments be it paying a recommended
      *        relayer or sending funds to a fee to address.
      * @param _receiverApp - Address of the application that received the message
@@ -157,6 +160,5 @@ interface IFeeCollector {
      * @param _feeToken - address indicating the fee token
      * @param _msgHash - bytes32 indicating the msg of the message whose fee has been bookmarked.
      */
-    function bookmarkedFeesPaid(address _receiverApp, address _feeToken, bytes32 _msgHash)
-        external;
+    function bookmarkedFeesPaid(address _receiverApp, address _feeToken, bytes32 _msgHash) external;
 }

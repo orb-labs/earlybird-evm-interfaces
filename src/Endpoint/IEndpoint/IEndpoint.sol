@@ -61,9 +61,15 @@ interface IEndpoint is
      * @param receiveModule - address of the library's receive module.
      * @param sendModulePausedSuccessfully - bool indicating whether the library send module paused successfully
      * @param receiveModulePausedSuccessfully - bool indicating whether the library receive module paused successfully
-     * 
+     *
      */
-    event LibraryPaused(string libraryName, address indexed sendModule, bool sendModulePausedSuccessfully, address indexed receiveModule, bool receiveModulePausedSuccessfully);
+    event LibraryPaused(
+        string libraryName,
+        address indexed sendModule,
+        bool sendModulePausedSuccessfully,
+        address indexed receiveModule,
+        bool receiveModulePausedSuccessfully
+    );
 
     /**
      * @dev - Event emitted when a library is undeprecated
@@ -73,7 +79,13 @@ interface IEndpoint is
      * @param sendModuleUnpausedSuccessfully - bool indicating whether library send module was unpaused successfully
      * @param receiveModuleUnpausedSuccessfully - bool indicating whether library receive module was unpaused successfully
      */
-    event LibraryUnpaused(string libraryName, address indexed sendModule, bool sendModuleUnpausedSuccessfully, address indexed receiveModule, bool receiveModuleUnpausedSuccessfully);
+    event LibraryUnpaused(
+        string libraryName,
+        address indexed sendModule,
+        bool sendModuleUnpausedSuccessfully,
+        address indexed receiveModule,
+        bool receiveModuleUnpausedSuccessfully
+    );
 
     /**
      * @dev - Event emitted when a library is deprecated.

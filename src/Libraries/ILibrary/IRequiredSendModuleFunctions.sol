@@ -89,7 +89,10 @@ interface IRequiredSendModuleFunctions is IRequiredModuleFunctions {
      * @return isTokenAccepted - bool indicating whether the token passed in the additional params is accepted
      * @return fee - uint256 indicating the bookmarked fee
      */
-    function getBookmarkedFee(address _receiverApp, address _feeToken, bytes32 _msgHash) external view returns (bool isTokenAccepted, uint256 fee);
+    function getBookmarkedFee(address _receiverApp, address _feeToken, bytes32 _msgHash)
+        external
+        view
+        returns (bool isTokenAccepted, uint256 fee);
 
     /**
      * @dev - Application-only function that allows the application to send message to its designated

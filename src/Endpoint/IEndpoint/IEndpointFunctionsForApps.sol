@@ -54,7 +54,7 @@ interface IEndpointFunctionsForApps {
     ) external payable;
 
     /**
-     * @dev - Function for applications to send a message to be broadcast by its selected library's send module 
+     * @dev - Function for applications to send a message to be broadcast by its selected library's send module
      *        wihout paying the message sending fee.  The app must them pay the fee for sending the message independently.
      * @param _receiverInstanceId - bytes32 indicating the instance id of the endpoint that is receiving the message
      * @param _receiver - bytes array indicating the address of the receiver
@@ -135,7 +135,7 @@ interface IEndpointFunctionsForApps {
     /**
      * @dev - Function allows anyone to retry delivering a failed message
      * @param _app - address of the app where the message is to be delivered
-     * @param _senderInstanceId - bytes32 indicating the instance id of the earlybird endpoint from 
+     * @param _senderInstanceId - bytes32 indicating the instance id of the earlybird endpoint from
      *                            which the sender is sending the message.
      * @param _sender - bytes indicating the address of the sender app
      *                  (bytes is used since the sender can be on an EVM or non-EVM chain)

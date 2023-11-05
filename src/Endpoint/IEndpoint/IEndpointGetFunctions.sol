@@ -43,7 +43,13 @@ interface IEndpointGetFunctions {
     function getLibrary(address _app)
         external
         view
-        returns (string memory libraryName, uint256 libraryId, address sendModule, address receiveModule, bool isDeprecated);
+        returns (
+            string memory libraryName,
+            uint256 libraryId,
+            address sendModule,
+            address receiveModule,
+            bool isDeprecated
+        );
 
     /**
      * @dev - Function returns the info for a library with a particular library id
@@ -123,10 +129,12 @@ interface IEndpointGetFunctions {
      *                  (bytes is used since the sender can be from an EVM or non-EVM chain)
      * @return receivingNonce - uint256 indicating the inbound nonce
      */
-    function getReceivingNonce(string calldata _libraryName, address _app, bytes32 _senderInstanceId, bytes memory _sender)
-        external
-        view
-        returns (uint256 receivingNonce);
+    function getReceivingNonce(
+        string calldata _libraryName,
+        address _app,
+        bytes32 _senderInstanceId,
+        bytes memory _sender
+    ) external view returns (uint256 receivingNonce);
 
     /**
      * @dev - Function returns whether a token is accepted as a sending fee and the amount of the tokens
@@ -194,7 +202,10 @@ interface IEndpointGetFunctions {
      * @return isTokenAccepted - bool indicating whether the token passed in the additional params is accepted
      * @return fee - uint256 indicating the bookmarked fee
      */
-    function getBookmarkedFee(address _receiverApp, address _feeToken, bytes32 _msgHash) external view returns (bool isTokenAccepted, uint256 fee);
+    function getBookmarkedFee(address _receiverApp, address _feeToken, bytes32 _msgHash)
+        external
+        view
+        returns (bool isTokenAccepted, uint256 fee);
 
     /**
      * @dev - Function returns fee caller must pay before they are able to retry delivering the failed message
