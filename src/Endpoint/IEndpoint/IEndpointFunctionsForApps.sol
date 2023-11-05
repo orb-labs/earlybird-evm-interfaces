@@ -76,6 +76,7 @@ interface IEndpointFunctionsForApps {
      * @param _receiverInstanceId - bytes32 indicating the instance id of the endpoint that is receiving the message
      * @param _receiver - bytes array indicating the address of the receiver
      *                    (bytes is used since the receiver can be on an EVM or non-EVM chain)
+     * @param _nonce - uint256 indicating the message nonce
      * @param _payload - bytes array containing the message payload to be delivered to the receiver
      * @param _additionalParams - bytes array containing additional params application would like to passed to the library
      *                            May be used in the library to enable special functionality
