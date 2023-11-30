@@ -501,7 +501,7 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
      * @return validityObject - MsgProofValidityObject indicating the validity object for a msg proof
      */
     function getMsgProofValidityObject(address _app, bytes32 _disputedMsgProofHash)
-        external
+        external view
         returns (MsgProofValidityObject memory validityObject);
 
     /**
