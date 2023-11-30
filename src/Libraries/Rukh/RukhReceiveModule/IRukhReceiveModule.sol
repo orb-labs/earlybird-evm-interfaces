@@ -498,6 +498,16 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
      * @dev - Function that allows a disputer to dispute a msg proof.
      * @param _app - address of the app whose msg proofs are being disputed
      * @param _disputedMsgProofHash - bytes32 indicating the hash of the disputed msg proof
+     * @return validityObject - MsgProofValidityObject indicating the validity object for a msg proof
+     */
+    function getMsgProofValidityObject(address _app, bytes32 _disputedMsgProofHash)
+        external
+        returns (MsgProofValidityObject memory validityObject);
+
+    /**
+     * @dev - Function that allows a disputer to dispute a msg proof.
+     * @param _app - address of the app whose msg proofs are being disputed
+     * @param _disputedMsgProofHash - bytes32 indicating the hash of the disputed msg proof
      * @param _deliveryBlockNumber - uint256 indicating the block number the disputed msg proof was delivered.
      * @param _msgProof - MsgProof object corresponding to the disputed msg proof.
      * @param _disputeVerdict - DisputeVerdictType indicating the dispute verdict.
