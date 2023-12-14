@@ -113,7 +113,7 @@ interface IEndpoint is
 
     /**
      * @dev - Event emitted when a library is selected and app config created for an app
-     * @param app - address of the app selecting and passing its configs to the library
+     * @param app - address of the app
      * @param sendModule - address of the library's send module
      * @param receiveModule - address of the library's receive module
      * @param libraryName - string indicating the name of the selected library
