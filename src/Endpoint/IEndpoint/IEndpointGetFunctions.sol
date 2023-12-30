@@ -163,6 +163,7 @@ interface IEndpointGetFunctions {
      * @param _receiver - bytes array indicating the address of the receiver
      *                    (bytes is used since the receiver can be from an EVM or non-EVM chain)
      * @param _payload - bytes array containing message payload
+     * @param _additionalParams - bytes array containing additional params.
      * @return acceptedTokens - array containing the address of all the tokens accepted as fee by the
      *                          library sending the message. Native tokens are represented as the address(0).
      */
@@ -170,7 +171,8 @@ interface IEndpointGetFunctions {
         address _app,
         bytes32 _receiverInstanceId,
         bytes calldata _receiver,
-        bytes calldata _payload
+        bytes calldata _payload,
+        bytes calldata _additionalParams
     ) external view returns (address[] memory acceptedTokens);
 
     /**

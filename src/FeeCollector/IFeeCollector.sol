@@ -33,13 +33,16 @@ interface IFeeCollector {
      * @param _receiverInstanceId - bytes32 indicating the receiver's endpoint instance Id
      * @param _receiver - bytes array indicating the address of the receiver
      * @param _payload - bytes array containing message payload
+     * @param _additionalParams - bytes array containing additional params application would like
+     *                            sent to the library.
      * @return acceptedTokens - return array of address of tokens that it accepts.
      */
     function getAcceptedTokens(
         address _app,
         bytes32 _receiverInstanceId,
         bytes calldata _receiver,
-        bytes calldata _payload
+        bytes calldata _payload,
+        bytes calldata _additionalParams
     ) external view returns (address[] memory acceptedTokens);
 
     /**
@@ -49,6 +52,8 @@ interface IFeeCollector {
      * @param _receiverInstanceId - bytes32 indicating the receiver's endpoint instance Id
      * @param _receiver - bytes array indicating the address of the receiver
      * @param _payload - bytes array containing message payload
+     * @param _additionalParams - bytes array containing additional params application would like
+     *                            sent to the library.
      * @return areAcceptedTokens - return array of address of tokens that it accepts.
      */
     function areTokensAccepted(
@@ -56,7 +61,8 @@ interface IFeeCollector {
         address _app,
         bytes32 _receiverInstanceId,
         bytes calldata _receiver,
-        bytes calldata _payload
+        bytes calldata _payload,
+        bytes calldata _additionalParams
     ) external view returns (bool[] memory areAcceptedTokens);
 
     /**

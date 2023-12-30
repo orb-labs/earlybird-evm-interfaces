@@ -31,8 +31,7 @@ interface IRequiredSendModuleFunctions is IRequiredModuleFunctions {
      *                    (bytes is used since the receiver can be on an EVM or non-EVM chain)
      * @param _payload - bytes array containing message payload
      * @param _additionalParams - bytes array containing additional params application would like
-     *                            sent to the module. For this function, its the encoded address of the
-     *                            token being used to pay the fee.
+     *                            sent to the module.
      * @return isTokenAccepted - bool indicating whether the token address passed in additionalParams is accepted or not.
      * @return estimatedFee - uint256 indicating the amount of the token that needed for the fee.
      */
@@ -50,6 +49,8 @@ interface IRequiredSendModuleFunctions is IRequiredModuleFunctions {
      * @param _receiverInstanceId - bytes32 indicating the instance id of the receiver's earlybird endpoint
      * @param _receiver - bytes array indicating the address of the receiver
      * @param _payload - bytes array containing the message payload to be delivered to the receiver
+     * @param _additionalParams - bytes array containing additional params application would like
+     *                            sent to the module.
      * @return acceptedTokens - array of addresses of the tokens that are accepted by the protocol
      *                          as fees for sending messages.
      */
@@ -57,7 +58,8 @@ interface IRequiredSendModuleFunctions is IRequiredModuleFunctions {
         address _app,
         bytes32 _receiverInstanceId,
         bytes memory _receiver,
-        bytes memory _payload
+        bytes memory _payload,
+        bytes memory _additionalParams
     ) external view returns (address[] memory acceptedTokens);
 
     /**
