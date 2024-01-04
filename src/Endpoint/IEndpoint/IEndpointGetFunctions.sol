@@ -201,13 +201,14 @@ interface IEndpointGetFunctions {
      * @param _receiverApp - address indicating the receiver app
      * @param _msgHash - bytes32 indicating the msg hash
      * @param _feeToken - address indicating the fee token
+     * @return isValidBookmark - bool indicating whether the bookmark is valid
      * @return isTokenAccepted - bool indicating whether the token passed in the additional params is accepted
      * @return fee - uint256 indicating the bookmarked fee
      */
     function getBookmarkedFee(address _receiverApp, address _feeToken, bytes32 _msgHash)
         external
         view
-        returns (bool isTokenAccepted, uint256 fee);
+        returns (bool isValidBookmark, bool isTokenAccepted, uint256 fee);
 
     /**
      * @dev - Function returns fee caller must pay before they are able to retry delivering the failed message
