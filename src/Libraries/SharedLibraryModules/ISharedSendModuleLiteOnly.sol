@@ -21,7 +21,7 @@ interface ISharedSendModuleLiteOnly {
      * @dev - Getter function that returns whether app is configured to self broadcast.
      * @param _app - address indicating the app we are requesting data for.
      */
-    function isAppConfigureToLiteBroadcast(address _app) external view returns (bool);
+    function isAppConfiguredToLiteBroadcast(address _app) external view returns (bool);
 
     /**
      * @dev - Getter function that lite broadcast config update code.
