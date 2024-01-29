@@ -47,16 +47,16 @@ interface IRequiredModuleFunctions {
     function updateAppConfigs(address _app, bytes memory _configs) external;
 
     /**
-     * @dev - Endpoint-only function that allows endpoint to update fee settings for the library.
-     * @param _libraryFeeSettings - bytes array containing encoded endpoint fee settings.
+     * @dev - Endpoint-only function that allows endpoint to update settings for a library module.
+     * @param _libraryModuleSettings - bytes array containing encoded endpoint library module settings.
      */
-    function updateProtocolFeeSettings(bytes memory _libraryFeeSettings) external;
+    function updateLibraryModuleSettings(bytes memory _libraryModuleSettings) external;
 
     /**
-     * @dev - Endpoint-only function that allows endpoint to retrieve the library's fee settings.
-     * @return feeSettings - bytes array containing encoded library fee settings
+     * @dev - Endpoint-only function that allows endpoint to retrieve the library's modules settings.
+     * @return libraryModuleSettings - bytes array containing encoded library module settings
      */
-    function getProtocolFeeSettings() external view returns (bytes memory feeSettings);
+    function getLibraryModuleSettings() external view returns (bytes memory libraryModuleSettings);
 
     /**
      * @dev - Endpoint-only function that allows endpoint to retrieve the library's fee settings.

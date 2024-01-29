@@ -41,15 +41,15 @@ interface IEndpointFunctionsForAdmins {
     function undeprecateLibrary(string calldata _libraryName) external;
 
     /**
-     * @dev - Admin-only function that allows admin to update protocol library fees
+     * @dev - Admin-only function that allows admin to update library module settings
      * @param _libraryName - string of the name of the library that is being added
      * @param _moduleType - uint256 indicating whether its the sendModule or
      *                      receiveModule whose settings are being updated
-     * @param _protocolFeeSettings - bytes value indicating the encoded protocol fee settings
+     * @param _libraryModuleSettings - bytes value indicating the encoded library module settings
      */
-    function updateProtocolFeeSettings(
+    function updateLibraryModuleSettings(
         string calldata _libraryName,
         uint256 _moduleType,
-        bytes calldata _protocolFeeSettings
+        bytes calldata _libraryModuleSettings
     ) external;
 }
