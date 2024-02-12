@@ -1,4 +1,4 @@
-// src/Libraries/SharedSendModule/ISharedSendModule.sol
+// src/Libraries/SharedLibraryModules/ISharedSendModule.sol
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
@@ -60,22 +60,6 @@ interface ISharedSendModule is IRequiredSendModuleFunctions {
     struct Nonces {
         uint256 ordered;
         uint256 unordered;
-    }
-
-    /**
-     * @dev - Struct representing additional params sent to protocol during the send call.
-     * address feeToken - address of the token being used to pay fees.
-     * isOrderedMsg - bool indicating whether the message is an ordered msg or not.
-     * destinationGas - uint256 indicating the gas to deliver the message with on the destination
-     * expectedRelayer - address indicating the fee collector for the expected relayer on the destination.
-     *                   If the expected relayer is the default relayer, supply address(0) or the default relayer fee collector.
-     *                   If its anyone else, supply their fee collector.
-     */
-    struct AdditionalParams {
-        address feeToken;
-        bool isOrderedMsg;
-        uint256 destinationGas;
-        address expectedRelayerFeeCollector;
     }
 
     /**

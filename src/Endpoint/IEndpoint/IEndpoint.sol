@@ -104,12 +104,12 @@ interface IEndpoint is
     event LibraryUndeprecated(string libraryName, address indexed sendModule, address indexed receiveModule);
 
     /**
-     * @dev - Event emitted when a library module's protocol fees settings are updated
+     * @dev - Event emitted when a library module's settings are updated
      * @param libraryName - string indicating the library name.
      * @param moduleType - uint256 indicating whether it is the send or receive module
-     * @param protocolFeeSettings - bytes indicating encoded protocol fee settings
+     * @param libraryModuleSettings - bytes indicating encoded library module settings
      */
-    event ProtocolFeeSettingsUpdated(string libraryName, uint256 indexed moduleType, bytes protocolFeeSettings);
+    event LibraryModuleSettingsUpdated(string libraryName, uint256 indexed moduleType, bytes libraryModuleSettings);
 
     /**
      * @dev - Event emitted when a library is selected and app config created for an app

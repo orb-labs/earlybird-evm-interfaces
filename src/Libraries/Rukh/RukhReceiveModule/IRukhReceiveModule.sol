@@ -2,14 +2,12 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
-import "../../ILibrary/IRequiredReceiveModuleFunctions.sol";
-
 /**
  * @author - Orb Labs
  * @title  - IRukhReceiveModule
- * @notice - Interface for Rukh library's receive module
+ * @notice - Interface for Rukh library's receive module only function
  */
-interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
+interface IRukhReceiveModule {
     /**
      * @dev - Enum representing the types of app config updates that can be made
      * MIN_DISPUTE_TIME_CHANGE - represents the app's minimum dispute time as the variable being updated.
@@ -52,22 +50,6 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
         UNDECIDED,
         MSG_PROOF_VALID,
         MSG_PROOF_INVALID
-    }
-
-    /**
-     * @dev - Struct that represent protocol fee settings
-     * feeOn - bool indicating whether protocol fees are on
-     * feeTo - address indicating who protocol fees should be paid to.
-     * collectInNativeToken - bool indicaitng whether protocol fees should be collected in native token.
-     * nonNativeFeeToken - address indicating what non-native token protocol fees should be collected in if applicable.
-     * amount - uint256 indicating amount of tokens that should be collected as fees.
-     */
-    struct ProtocolFeeSettings {
-        bool feeOn;
-        address payable feeTo;
-        bool collectInNativeToken;
-        address nonNativeFeeToken;
-        uint256 amount;
     }
 
     /**
@@ -246,21 +228,6 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
     }
 
     /**
-     * @dev - Struct that represents a message that Rukh receive module failed to deliver.
-     * failedMsgHash - bytes32 representing failed msg hash
-     * fee - uint256 indicating fee caller must pay before they can deliver the new failed message.
-     * relayerThatDeliveredMsg - address of relayer that tried delivering the message.
-     *                           It also happens to be the address the fee with be paid to.
-     * nonceIndexInFailedMsgsArray - uint256 indicating the position of this failed msg's nonce in the failMsgs array.
-     */
-    struct FailedMsg {
-        bytes32 failedMsgHash;
-        uint256 fee;
-        address relayerThatDeliveredMsg;
-        uint256 nonceIndexInFailedMsgsArray;
-    }
-
-    /**
      * @dev - Event emitted when msg proofs are submitted
      * @param app - address of the app messages are being sent to.
      * @param indexWrittenTo - uint256 indicating the index the aggregate msg proof should be written into.
@@ -285,109 +252,12 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
     );
 
     /**
-     * @dev - Emitted when two aggregate msg proof hashes are merged
-     * @param app - address of the app msg proofs are being merged.
-     * @param firstAggregateMsgProofHashIndex - uint256 indicating the index of the first aggregate msg proof index.
-     * @param secondAggregateMsgProofHashIndex - uint256 indicating the index of the second aggregate msg proof index.
-     * @param msgProofsInFirstAggregateMsgProofHash - bytes32 array indicating the msg proofs in first aggregate msg proof.
-     * @param msgProofsInSecondAggregateMsgProofHash - bytes32 array indicating the msg proofs in second aggregate msg proof.
-     */
-    event MergedAggregateMsgProofHashes(
-        address indexed app,
-        uint256 indexed firstAggregateMsgProofHashIndex,
-        uint256 indexed secondAggregateMsgProofHashIndex,
-        bytes32[] msgProofsInFirstAggregateMsgProofHash,
-        bytes32[] msgProofsInSecondAggregateMsgProofHash
-    );
-
-    /**
-     * @dev - Emitted when two aggregate msg proof hashes are merged
-     * @param app - address of the app msg proofs are being merged.
-     * @param aggregateMsgProofHash1Index - uint256 indicating aggregate msg proof hash 1's index
-     * @param aggregateMsgProofHash2Index - uint256 indicating aggregate msg proof hash 2's index
-     * @param aggregateMsgProofHash1 - bytes32 indicating aggregate msg proof hash 1.
-     * @param aggregateMsgProofHash2 - bytes32 indicating aggregate msg proof hash 2.
-     * @param msgProofsInAggregateMsgProofHash1 - bytes32 array indicating the msg proofs in aggregate msg proof hash 1
-     * @param msgProofsInAggregateMsgProofHash2 - bytes32 array indicating the msg proofs in aggregate msg proof hash 2
-     */
-    event SplitAggregateMsgProofHash(
-        address indexed app,
-        uint256 indexed aggregateMsgProofHash1Index,
-        uint256 indexed aggregateMsgProofHash2Index,
-        bytes32 aggregateMsgProofHash1,
-        bytes32 aggregateMsgProofHash2,
-        bytes32[] msgProofsInAggregateMsgProofHash1,
-        bytes32[] msgProofsInAggregateMsgProofHash2
-    );
-
-    /**
-     * @dev - Emitted when some msg proofs in an aggregate msg proof hash are removed.
-     * @param app - address of the app messages are being sent to.
-     * @param aggregateMsgProofHashIndex - uint256 indicating the index that the aggregate msg proof is written into.
-     * @param aggregateMsgProofHash - bytes32 indicating the aggregate msg proof hash.
-     * @param msgProofsHashesInAggregateMsgProofHash - bytes32 array indicating the hashes of msg proofs in the
-     *                                                 aggregate msg proof hash
-     */
-    event TrimmedAggregateMsgProofHash(
-        address indexed app,
-        uint256 indexed aggregateMsgProofHashIndex,
-        bytes32 indexed aggregateMsgProofHash,
-        bytes32[] msgProofsHashesInAggregateMsgProofHash
-    );
-
-    /**
      * @dev - Event emitted when msg are delivered
      * @param app - address of the app the message was delivered to.
      * @param msgHash - Hash of the message hash corresponding to the message that was delivered
      * @param gasUsed - uint256 indicating how much gas was used for delivering msg
      */
     event MsgGasUsed(address indexed app, bytes32 indexed msgHash, uint256 gasUsed);
-
-    /**
-     * @dev - Event emitted when a message being delivered fails.
-     * @param app - address of the app message was being sent to.
-     * @param msgHash - bytes32 indicating the msg's hash
-     * @param senderInstanceId - bytes32 indicating the earlybird endpoint instance id of the sender
-     * @param sender - bytes array indicating the address of the sender
-     * @param nonce - uint256 indicating the nonce of the failed msg
-     * @param payload - bytes array indicating the payload of the msg
-     * @param additionalInfo - bytes array indicating additional info that was being passed along to the app.
-     * @param failureFee - uint256 indicating the fee user must pay to resent message.
-     */
-    event MsgFailed(
-        address indexed app,
-        bytes32 indexed msgHash,
-        bytes32 indexed senderInstanceId,
-        bytes sender,
-        uint256 nonce,
-        bytes payload,
-        bytes additionalInfo,
-        uint256 failureFee
-    );
-
-    /**
-     * @dev - Event emitted when a message being delivered fails because it was submitted with wrong rec values.
-     * @param app - address of the app message was being sent to.
-     * @param msgHash - bytes32 indicating the msg's hash
-     * @param senderInstanceId - bytes32 indicating the earlybird endpoint instance Id of the sender
-     * @param sender - bytes array indicating the address of the sender
-     * @param nonce - uint256 indicating the nonce of the failed msg
-     */
-    event MsgSubmittedWithWrongRecValues(
-        address indexed app, bytes32 msgHash, bytes32 indexed senderInstanceId, bytes sender, uint256 nonce
-    );
-
-    /**
-     * @dev - Event emitted when a message being delivered fails because it was submitted by wrong relayer.
-     * @param app - address of the app message was being sent to.
-     * @param msgHash - bytes32 indicating the msg's hash
-     * @param senderInstanceId - bytes32 indicating the earlybird instance Id of the sender
-     * @param sender - bytes array indicating the address of the sender
-     * @param nonce - uint256 indicating the nonce of the failed msg
-     */
-    event MsgSubmittedByWrongRelayer(
-        address indexed app, bytes32 msgHash, bytes32 indexed senderInstanceId, bytes sender, uint256 nonce
-    );
 
     /**
      * @dev - Event emitted when a message proof is disputed.
@@ -426,59 +296,6 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
     function submitMessageProofs(MsgProofsByApp[] memory _msgProofsByApp) external payable;
 
     /**
-     * @dev - Function that allows app's oracle to merge the msg proofs in two aggregate msg proof hashes together.
-     *        The final merged aggregate msg proof is stored in the same slot as the first aggregate msg proof.
-     * @param _app - address of the app msg proofs are being merged.
-     * @param _firstAggregateMsgProofHashIndex - uint256 indicating the index of the first aggregate msg proof index.
-     * @param _secondAggregateMsgProofHashIndex - uint256 indicating the index of the second aggregate msg proof index.
-     * @param _msgProofsInFirstAggregateMsgProofHash - bytes32 array indicating the msg proofs in first aggregate msg proof.
-     * @param _msgProofsInSecondAggregateMsgProofHash - bytes32 array indicating the msg proofs in second aggregate msg proof.
-     */
-    function mergeAggregateMsgProofHashes(
-        address _app,
-        uint256 _firstAggregateMsgProofHashIndex,
-        uint256 _secondAggregateMsgProofHashIndex,
-        bytes32[] memory _msgProofsInFirstAggregateMsgProofHash,
-        bytes32[] memory _msgProofsInSecondAggregateMsgProofHash
-    ) external;
-
-    /**
-     * @dev - Function that allows app's oracle to splits the msg proofs in an aggregate msg proof hash into two
-     *        seperate aggregate msg proof hashes holding subset of the original.
-     * @param _app - address of the app msg proofs are being split.
-     * @param _aggregateMsgProofIndex - uint256 indicating the index of the aggregate msg proof we are splitting.
-     * @param _msgProofsInAggregateMsgProofHash - bytes32 array indicating the msg proofs in aggregate msg proof
-     *                                            we are splitting.
-     * @param _indicesOfMsgProofsToKeepInAggregateMsgProofHash - uint256 array indicating indices of msg proofs
-     *                                                           to keep in the original aggregate Msg Proof Hash.
-     * @param _indicesOfMsgProofsToPutInNewAggregateMsgProofHash - uint256 array indicating indices of msg proofs
-     *                                                             to put in the new aggregate msg proof hash we are creating.
-     * @param _newAggregateMsgProofHashIndex - uint256 indicating the index of the new aggregate msg proof hash we created
-     */
-    function splitAggregateMsgProofHashes(
-        address _app,
-        uint256 _aggregateMsgProofIndex,
-        bytes32[] memory _msgProofsInAggregateMsgProofHash,
-        uint256[] memory _indicesOfMsgProofsToKeepInAggregateMsgProofHash,
-        uint256[] memory _indicesOfMsgProofsToPutInNewAggregateMsgProofHash,
-        uint256 _newAggregateMsgProofHashIndex
-    ) external;
-
-    /**
-     * @dev - Function that allows the app's oracle to trims/removes some message proofs that are in an aggregate msg hash.
-     * @param _app - address of the app msg proofs are being merged.
-     * @param _aggregateMsgProofHashIndex - uint256 indicating the index of the first aggregate msg proof index.
-     * @param _msgProofsInAggregateMsgProofHash - bytes32 array indicating the msg proofs in first aggregate msg proof.
-     * @param _indicesOfMsgProofsInNewAggregateMsgProofHash - uint256 indicating the index of the second aggregate msg proof index.
-     */
-    function trimMsgProofsInAggregateMsgProof(
-        address _app,
-        uint256 _aggregateMsgProofHashIndex,
-        bytes32[] memory _msgProofsInAggregateMsgProofHash,
-        uint256[] memory _indicesOfMsgProofsInNewAggregateMsgProofHash
-    ) external;
-
-    /**
      * @dev - Function that allows a disputer to dispute a msg proof.
      * @param _app - address of the app whose msg proofs are being disputed
      * @param _disputedMsgProofHash - bytes32 indicating the hash of the disputed msg proof
@@ -501,7 +318,8 @@ interface IRukhReceiveModule is IRequiredReceiveModuleFunctions {
      * @return validityObject - MsgProofValidityObject indicating the validity object for a msg proof
      */
     function getMsgProofValidityObject(address _app, bytes32 _disputedMsgProofHash)
-        external view
+        external
+        view
         returns (MsgProofValidityObject memory validityObject);
 
     /**

@@ -10,6 +10,22 @@ pragma solidity ^0.8.17;
  */
 interface IRequiredModuleFunctions {
     /**
+     * @dev - Struct representing additional params sent to protocol during the send call.
+     * address feeToken - address of the token being used to pay fees.
+     * isOrderedMsg - bool indicating whether the message is an ordered msg or not.
+     * destinationGas - uint256 indicating the gas to deliver the message with on the destination
+     * expectedRelayer - address indicating the fee collector for the expected relayer on the destination.
+     *                   If the expected relayer is the default relayer, supply address(0) or the default relayer fee collector.
+     *                   If its anyone else, supply their fee collector.
+     */
+    struct AdditionalParams {
+        address feeToken;
+        bool isOrderedMsg;
+        uint256 destinationGas;
+        address expectedRelayerFeeCollector;
+    }
+
+    /**
      * @dev - Endpoint-only function that allows endpoint to pause library
      */
     function pauseLibrary() external;
@@ -47,16 +63,16 @@ interface IRequiredModuleFunctions {
     function updateAppConfigs(address _app, bytes memory _configs) external;
 
     /**
-     * @dev - Endpoint-only function that allows endpoint to update fee settings for the library.
-     * @param _libraryFeeSettings - bytes array containing encoded endpoint fee settings.
+     * @dev - Endpoint-only function that allows endpoint to update settings for a library module.
+     * @param _libraryModuleSettings - bytes array containing encoded endpoint library module settings.
      */
-    function updateProtocolFeeSettings(bytes memory _libraryFeeSettings) external;
+    function updateLibraryModuleSettings(bytes memory _libraryModuleSettings) external;
 
     /**
-     * @dev - Endpoint-only function that allows endpoint to retrieve the library's fee settings.
-     * @return feeSettings - bytes array containing encoded library fee settings
+     * @dev - Endpoint-only function that allows endpoint to retrieve the library's modules settings.
+     * @return libraryModuleSettings - bytes array containing encoded library module settings
      */
-    function getProtocolFeeSettings() external view returns (bytes memory feeSettings);
+    function getLibraryModuleSettings() external view returns (bytes memory libraryModuleSettings);
 
     /**
      * @dev - Endpoint-only function that allows endpoint to retrieve the library's fee settings.

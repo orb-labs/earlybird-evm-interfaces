@@ -63,41 +63,6 @@ interface IRequiredSendModuleFunctions is IRequiredModuleFunctions {
     ) external view returns (address[] memory acceptedTokens);
 
     /**
-     * @dev - Function returns whether a token is accepted for fees and the amount of the tokens
-     *        the app would have to pay in fees for an already delivered message.
-     * @param _receiverApp - Address of the app receiving the message.
-     * @param _senderInstanceId - bytes32 indicating the sender's endpoint instance Id
-     * @param _sender - bytes array indicating the address of the sender
-     *                    (bytes is used since the sender can be on an EVM or non-EVM chain)
-     * @param _payload - bytes array containing message payload
-     * @param _additionalParams - bytes array containing additional params that was delivered with the message on the source.
-     * @return isTokenAccepted - bool indicating whether the token passed in the additional params is accepted
-     * @return feeEstimate - uint256 indicating the sendingFeeEstimate
-     */
-    function getEstimatedFeeForDeliveredMessage(
-        address _receiverApp,
-        bytes32 _senderInstanceId,
-        bytes calldata _sender,
-        bytes calldata _payload,
-        bytes calldata _additionalParams
-    ) external view returns (bool isTokenAccepted, uint256 feeEstimate);
-
-    /**
-     * @dev - Function returns whether a token is accepted for a bookmarked fee and the amount of the tokens
-     *        needed to pay back the bookmarked fee
-     * @param _receiverApp - address indicating the receiver app
-     * @param _msgHash - bytes32 indicating the msg hash
-     * @param _feeToken - address indicating the fee token
-     * @return isValidBookmark - bool indicating whether the bookmark is valid
-     * @return isTokenAccepted - bool indicating whether the token passed in the additional params is accepted
-     * @return fee - uint256 indicating the bookmarked fee
-     */
-    function getBookmarkedFee(address _receiverApp, address _feeToken, bytes32 _msgHash)
-        external
-        view
-        returns (bool isValidBookmark, bool isTokenAccepted, uint256 fee);
-
-    /**
      * @dev - Application-only function that allows the application to send message to its designated
      *        outbound msg module to be broadcasted if it is not self-broadcasting
      * @param _app - address of the application sending the message
@@ -153,53 +118,4 @@ interface IRequiredSendModuleFunctions is IRequiredModuleFunctions {
         bytes calldata _payload,
         bytes calldata _additionalParams
     ) external payable;
-
-    /**
-     * @dev - Application-only function that allows the application to pay the fee for a delivered message on the receiver endpoint instead of the sender endpoint.
-     *        Coupled with the sendMessageWithoutPayingFees(), apps should be able to send messages and pay on the destination.
-     * @param _receiverApp - address indicating the app that received the message
-     * @param _senderInstanceId - bytes32 indicating the instance id of the endpoint that sent the message
-     * @param _sender - bytes array indicating the address of the sender
-     *                    (bytes is used since the sender can be on an EVM or non-EVM chain)
-     * @param _nonce - uint256 indicating the nonce of the message
-     * @param _payload - bytes array containing the message payload was delivered to the receiver
-     * @param _additionalParams - bytes array containing additional params application passed to the library on the sender endpoint.
-     */
-    function payFeesForDeliveredMessage(
-        address _receiverApp,
-        bytes32 _senderInstanceId,
-        bytes calldata _sender,
-        uint256 _nonce,
-        bytes calldata _payload,
-        bytes calldata _additionalParams
-    ) external payable;
-
-    /**
-     * @dev - Application-only function that allows the application to bookmark or save the amount they owe in fees for a delivered message on the receiver endpoint.
-     *        Allows the app to return and pay the amount bookmarked even if the fee has increased.
-     * @param _receiverApp - address indicating the app that received the message whose fee was bookmarked
-     * @param _senderInstanceId - bytes32 indicating the instance id of the endpoint that sent the message
-     * @param _sender - bytes array indicating the address of the sender
-     *                    (bytes is used since the sender can be on an EVM or non-EVM chain)
-     * @param _nonce - uint256 indicating the nonce of the message.
-     * @param _payload - bytes array containing the message payload was delivered to the receiver
-     * @param _additionalParams - bytes array containing additional params application passed to the library on the sender endpoint.
-     * @return msgHash - the hash of the delivered msg whose fee was bookmarked
-     */
-    function bookmarkFeesForDeliveredMessage(
-        address _receiverApp,
-        bytes32 _senderInstanceId,
-        bytes calldata _sender,
-        uint256 _nonce,
-        bytes calldata _payload,
-        bytes calldata _additionalParams
-    ) external returns (bytes32 msgHash);
-
-    /**
-     * @dev - Application-only function that allows the application to pay bookmarked fees.
-     * @param _receiverApp - address indicating the app that received the message whose fee was bookmarked
-     * @param _feeToken - uint256 indicating the token the fee should be played in.
-     * @param _msgHash - bytes32 indicating the msgHash of the bookmarked message
-     */
-    function payBookmarkedFees(address _receiverApp, address _feeToken, bytes32 _msgHash) external payable;
 }

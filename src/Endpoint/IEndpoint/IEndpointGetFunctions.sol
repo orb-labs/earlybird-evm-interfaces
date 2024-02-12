@@ -65,15 +65,15 @@ interface IEndpointGetFunctions {
         returns (string memory libraryName, address sendModule, address receiveModule, bool isDeprecated);
 
     /**
-     * @dev - Function returns the library Fee settings
+     * @dev - Function returns the library module settings
      * @param _libraryName - string indicating the name of library
      * @param _moduleType - uint256 indicating the module type
-     * @return protocolFeeSettings - bytes containing an app's send library configs
+     * @return libraryModuleSettings - bytes containing an app's library module settings
      */
-    function getProtocolFeeSettings(string calldata _libraryName, uint256 _moduleType)
+    function getLibraryModuleSettings(string calldata _libraryName, uint256 _moduleType)
         external
         view
-        returns (bytes memory protocolFeeSettings);
+        returns (bytes memory libraryModuleSettings);
 
     /**
      * @dev - Function returns the library Fee settings
