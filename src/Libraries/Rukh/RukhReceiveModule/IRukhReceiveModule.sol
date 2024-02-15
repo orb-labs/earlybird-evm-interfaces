@@ -325,6 +325,16 @@ interface IRukhReceiveModule {
     /**
      * @dev - Function that allows a disputer to dispute a msg proof.
      * @param _app - address of the app whose msg proofs are being disputed
+     * @return currentDisputeEpoch - CurrentDisputeEpoch indicating the current dispute epoch
+     */
+    function getCurrentDisputeEpochForApp(address _app)
+        external
+        view
+        returns (CurrentDisputeEpoch memory currentDisputeEpoch);
+
+    /**
+     * @dev - Function that allows a disputer to dispute a msg proof.
+     * @param _app - address of the app whose msg proofs are being disputed
      * @param _disputedMsgProofHash - bytes32 indicating the hash of the disputed msg proof
      * @param _deliveryBlockNumber - uint256 indicating the block number the disputed msg proof was delivered.
      * @param _msgProof - MsgProof object corresponding to the disputed msg proof.
