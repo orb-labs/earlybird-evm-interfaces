@@ -1,17 +1,17 @@
-// src/Endpoint/IEndpoint/IEndpointFunctionsForLibraries.sol
+// src/EarlybirdEndpoint/IEarlybirdEndpointFunctionsForLibraries.sol
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
 /**
  * @author - Orb Labs
- * @title  - IEndpointFunctionsForLibraries
- * @notice - Interface for Endpoint functions that only the library can call.
+ * @title  - IEarlybirdEndpointFunctionsForLibraries
+ * @notice - Interface for Earlybird Endpoint functions that only the library can call.
  */
-interface IEndpointFunctionsForLibraries {
+interface IEarlybirdEndpointFunctionsForLibraries {
     /**
      * @dev - Function that allows the library to deliver messages to applications that use it
      * @param _app - address of the app the message is being delivered to.
-     * @param _senderInstanceId - bytes32 indicating the instance id of the endpoint from which the message is being sent.
+     * @param _senderInstanceId - bytes32 indicating the instance id of the earlybird endpoint from which the message is being sent.
      * @param _sender - bytes array indicating the address of the app sending the message.
      *                  (bytes is used since the receiver can be on an EVM or non-EVM chain)
      * @param _nonce - nonce of the message

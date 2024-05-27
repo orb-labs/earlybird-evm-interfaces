@@ -1,17 +1,17 @@
-// src/FeeCollector/IFeeCollector.sol
+// src/EarlybirdFeeCollector/IEarlybirdFeeCollector.sol
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
 /**
  * @author - Orb Labs
- * @title  - IFeeCollector.sol
+ * @title  - IEarlybirdFeeCollector.sol
  * @notice - Interface for oracle + relayer fee settings and collection
  */
-interface IFeeCollector {
+interface IEarlybirdFeeCollector {
     /**
      * @dev - function returns the amount an oracle is willing to charge for passing a message
      * @param _app - Address of the application
-     * @param _receiverInstanceId - bytes32 indicating the receiver's endpoint instance Id
+     * @param _receiverInstanceId - bytes32 indicating the receiver's earlybird endpoint instance Id
      * @param _receiver - bytes array indicating the address of the receiver
      * @param _payload - bytes array containing message payload
      * @param _additionalParams - bytes array containing additional params application would like
@@ -30,7 +30,7 @@ interface IFeeCollector {
     /**
      * @dev - function returns an array of tokens that are accepted as fees by the oracle
      * @param _app - Address of the application
-     * @param _receiverInstanceId - bytes32 indicating the receiver's endpoint instance Id
+     * @param _receiverInstanceId - bytes32 indicating the receiver's earlybird endpoint instance Id
      * @param _receiver - bytes array indicating the address of the receiver
      * @param _payload - bytes array containing message payload
      * @param _additionalParams - bytes array containing additional params application would like
@@ -49,7 +49,7 @@ interface IFeeCollector {
      * @dev - function returns whether a token is accepted as for fees or not.
      * @param _tokens - address of tokens we are inquirying about
      * @param _app - Address of the application
-     * @param _receiverInstanceId - bytes32 indicating the receiver's endpoint instance Id
+     * @param _receiverInstanceId - bytes32 indicating the receiver's earlybird endpoint instance Id
      * @param _receiver - bytes array indicating the address of the receiver
      * @param _payload - bytes array containing message payload
      * @param _additionalParams - bytes array containing additional params application would like
@@ -69,7 +69,7 @@ interface IFeeCollector {
      * @dev - Function returns whether a token is accepted for fees and the amount of the tokens
      *        the app would have to pay in fees for an already delivered message.
      * @param _receiverApp - Address of the app receiving the message.
-     * @param _senderInstanceId - bytes32 indicating the sender's endpoint instance Id
+     * @param _senderInstanceId - bytes32 indicating the sender's earlybird endpoint instance Id
      * @param _sender - bytes array indicating the address of the sender
      *                    (bytes is used since the sender can be on an EVM or non-EVM chain)
      * @param _payload - bytes array containing message payload
@@ -105,7 +105,7 @@ interface IFeeCollector {
      *        Used by fee collector to specific functions related to fee payments be it paying a recommended
      *        relayer or sending funds to a fee to address.
      * @param _app - Address of the application
-     * @param _receiverInstanceId - bytes32 indicating the receiver's endpoint instance Id
+     * @param _receiverInstanceId - bytes32 indicating the receiver's earlybird endpoint instance Id
      * @param _receiver - bytes array indicating the address of the receiver
      * @param _payload - bytes array containing message payload
      * @param _additionalParams - bytes array containing additional params application would like
@@ -124,7 +124,7 @@ interface IFeeCollector {
      *        Used by fee collector to specific functions related to fee payments be it paying a recommended
      *        relayer or sending funds to a fee to address.
      * @param _receiverApp - Address of the application that received the message
-     * @param _senderInstanceId - bytes32 indicating the sender's endpoint instance Id
+     * @param _senderInstanceId - bytes32 indicating the sender's earlybird endpoint instance Id
      * @param _sender - bytes array indicating the address of the sender
      * @param _payload - bytes array containing message payload
      * @param _additionalParams - bytes array containing additional params application would like
@@ -139,16 +139,16 @@ interface IFeeCollector {
     ) external;
 
     /**
-     * @dev - function that allows the application to bookmark or save the amount they owe in fees for a delivered message on the receiver endpoint.
+     * @dev - function that allows the application to bookmark or save the amount they owe in fees for a delivered message on the receiver earlybird endpoint.
      *        Allows the app to return and pay the amount bookmarked even if the fee has increased.
      * @param _msgHash - bytes32 indicating the hash of the messsage whose fees are being bookmarked
      * @param _receiverApp - address indicating the app that received the message whose fee was bookmarked
-     * @param _senderInstanceId - bytes32 indicating the instance id of the endpoint that sent the message
+     * @param _senderInstanceId - bytes32 indicating the instance id of the earlybird endpoint that sent the message
      * @param _sender - bytes array indicating the address of the sender
      *                    (bytes is used since the sender can be on an EVM or non-EVM chain)
      * @param _nonce - uint256 indicating the nonce of the message.
      * @param _payload - bytes array containing the message payload was delivered to the receiver
-     * @param _additionalParams - bytes array containing additional params application passed to the library on the sender endpoint.
+     * @param _additionalParams - bytes array containing additional params application passed to the library on the sender earlybird endpoint.
      * @return feeBookmarked - boolean indicating that the fee was bookmarked.
      */
     function bookmarkFeesForDeliveredMessage(

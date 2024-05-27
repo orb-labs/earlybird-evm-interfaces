@@ -1,14 +1,14 @@
-// src/Libraries/Rukh/RukhReceiveModule/IDisputerContractForRukhReceiveModule.sol
+// src/Libraries/Rukh/IRukhReceiveModuleDisputerContract.sol
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
 /**
  * @author - Orb Labs
- * @title  - IDisputerContractForRukhReceiverModule.sol
+ * @title  - IRukhReceiverModuleDisputerContract.sol
  * @notice - Interface for Rukh library's receive module's disputer contracts.
  *
  */
-interface IDisputerContractForRukhReceiveModule {
+interface IRukhReceiveModuleDisputerContract {
     /**
      * @dev - function returns the amount an oracle is willing to charge for passing a message
      * @param _app - address indicating the app whose dispute got resolved

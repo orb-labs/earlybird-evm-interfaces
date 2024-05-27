@@ -8,11 +8,11 @@ import "./IRequiredModuleFunctions.sol";
  * @author - Orb Labs
  * @title  - IRequiredSendModuleFunctions
  * @notice - Interface for required send module functions.
- *           These functions are required because they are called by the endpoint.
+ *           These functions are required because they are called by the Earlybird endpoint.
  */
 interface IRequiredSendModuleFunctions is IRequiredModuleFunctions {
     /**
-     * @dev - Function that allows endpoint to get an app's sending nonce if its not self-broadcasting.
+     * @dev - Function that allows earlybird endpoint to get an app's sending nonce if its not self-broadcasting.
      *        Each app has a different nonce for each receiver on each earlybird instance to which it sends messages.
      * @param _app - address of the application that has been sending the messages
      * @param _receiverInstanceId - bytes32 indicating the instance id of the receiver's earlybird endpoint

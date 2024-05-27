@@ -130,7 +130,7 @@ interface IRukhReceiveModule {
      *                     with invalid revealed msg secrets can be rejected by the app. Can be used by third party's disputers or rec
      *                     relayers to self-select which message proofs to pay attention to.
      * senderInstanceId - bytes32 indicating the sender's earlybird endpoint instance id.
-     * isSelfBroadcastedMsg - bool indicating whether the message was self broadcasted or sent through the endpoint and broadcasted by the send library.
+     * isSelfBroadcastedMsg - bool indicating whether the message was self broadcasted or sent through the earlybird endpoint and broadcasted by the send library.
      * sender - bytes array indicating the address of the sender. (bytes is used since the sender can be on an EVM or non-EVM chain)
      * sourceTxnHash - bytes array indicating the source transaction hash.
      *                 (bytes is used since the source transaction can be on an EVM or non-EVM chain)

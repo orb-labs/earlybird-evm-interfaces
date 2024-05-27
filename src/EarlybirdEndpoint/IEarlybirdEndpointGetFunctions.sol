@@ -1,15 +1,15 @@
-// src/Endpoint/IEndpoint/IEndpointGetFunctions.sol
+// src/EarlybirdEndpoint/IEarlybirdEndpointGetFunctions.sol
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
 /**
  * @author - Orb Labs
- * @title  - IEndpointGetFunctions
- * @notice - Interface for Endpoint get functions.
+ * @title  - IEarlybirdEndpointGetFunctions
+ * @notice - Interface for Earlybird Endpoint get functions.
  */
-interface IEndpointGetFunctions {
+interface IEarlybirdEndpointGetFunctions {
     /**
-     * @dev - Function returns the endpoint instance Id
+     * @dev - Function returns the earlybird endpoint instance Id
      */
     function getInstanceId() external returns (bytes32);
 
@@ -107,7 +107,7 @@ interface IEndpointGetFunctions {
      *        through libraryName. App has a different nonce for each receiver on each endpoint instance to which it sends messages.
      * @param _libraryName - string indicating name of the library whose sending library nonce is being returned
      * @param _app - address of the application that has been sending the messages
-     * @param _receiverInstanceId - bytes32 indicating the instance id of the receiver's endpoint
+     * @param _receiverInstanceId - bytes32 indicating the instance id of the receiver's earlybird endpoint
      * @param _receiver - bytes array indicating the receiver's address
      *                    (bytes is used since the receiver can be from an EVM or non-EVM chain)
      * @return sendingNonce - uint256 indicating the outbound nonce
@@ -124,7 +124,7 @@ interface IEndpointGetFunctions {
      *        through libraryName. App has a different nonce for each sender on each endpoint instance from which it receives messages.
      * @param _libraryName - string indicating name of the library whole receive library nonce is being returned
      * @param _app - address of the application that has been receiving the messages
-     * @param _senderInstanceId - bytes32 indicating the id of the sender's endpoint instance id
+     * @param _senderInstanceId - bytes32 indicating the id of the sender's earlybird endpoint instance id
      * @param _sender - bytes array indicating the sender's address
      *                  (bytes is used since the sender can be from an EVM or non-EVM chain)
      * @return receivingNonce - uint256 indicating the inbound nonce
@@ -159,7 +159,7 @@ interface IEndpointGetFunctions {
     /**
      * @dev - Function returns all the tokens accepted as fees for sending messages.
      * @param _app - Address of the app sending the message.
-     * @param _receiverInstanceId - bytes32 indicating the receiver endpoint instance Id
+     * @param _receiverInstanceId - bytes32 indicating the receiver earlybird endpoint instance Id
      * @param _receiver - bytes array indicating the address of the receiver
      *                    (bytes is used since the receiver can be from an EVM or non-EVM chain)
      * @param _payload - bytes array containing message payload
@@ -179,7 +179,7 @@ interface IEndpointGetFunctions {
      * @dev - Function returns whether a token is accepted for fees and the amount of the tokens
      *        the app would have to pay in fees for an already delivered message.
      * @param _receiverApp - Address of the app receiving the message.
-     * @param _senderInstanceId - bytes32 indicating the sender's endpoint instance Id
+     * @param _senderInstanceId - bytes32 indicating the sender's earlybird endpoint instance Id
      * @param _sender - bytes array indicating the address of the sender
      *                    (bytes is used since the sender can be on an EVM or non-EVM chain)
      * @param _payload - bytes array containing message payload
@@ -214,7 +214,7 @@ interface IEndpointGetFunctions {
      * @dev - Function returns fee caller must pay before they are able to retry delivering the failed message
      * @param _libraryName - string indicating name of the library whole receive library nonce is being returned
      * @param _app - address of the app the message is being delivered to.
-     * @param _senderInstanceId - bytes32 indicating the instance id of the sender's endpoint
+     * @param _senderInstanceId - bytes32 indicating the instance id of the sender's earlybird endpoint
      * @param _sender - bytes indicating the address of the sender
      *                  (bytes is used since the sender can be from an EVM or non-EVM chain)
      * @param _nonce - uint256 indicating the index of the failed message in the array of failed messages
@@ -235,7 +235,7 @@ interface IEndpointGetFunctions {
      * @dev - Function returns array of hashes of failed messages sent from a sender on senderInstanceId through libraryName
      * @param _libraryName - string indicating name of the library whole receive library nonce is being returned
      * @param _app - address of the app the message is being delivered to.
-     * @param _senderInstanceId - bytes32 indicating the instance id of the sender's endpoint
+     * @param _senderInstanceId - bytes32 indicating the instance id of the sender's earlybird endpoint
      * @param _sender - bytes indicating the address of the sender app
      *                  (bytes is used since the sender can be from an EVM or non-EVM chain)
      * @return noncesOfFailedMsgs - array of uint256 indicating the nonces of failed msgs
@@ -248,17 +248,17 @@ interface IEndpointGetFunctions {
     ) external view returns (uint256[] memory noncesOfFailedMsgs);
 
     /**
-     * @dev - Function returns whether endpoint is in the process of sending a message or not.
+     * @dev - Function returns whether earlybird endpoint is in the process of sending a message or not.
      */
     function isSendingMessage() external view returns (bool);
 
     /**
-     * @dev - Function returns whether endpoint is in the process of delivering a message or not.
+     * @dev - Function returns whether earlybird endpoint is in the process of delivering a message or not.
      */
     function isDeliveringMessageToApp() external view returns (bool);
 
     /**
-     * @dev - Function returns whether endpoint is in the process of retrying a message delivery or not.
+     * @dev - Function returns whether earlybird endpoint is in the process of retrying a message delivery or not.
      */
     function isRetryingMessageDelivery() external view returns (bool);
 }

@@ -12,27 +12,31 @@ import "../ILibrary/IRequiredSendModuleFunctions.sol";
 interface ISharedSendModule is IRequiredSendModuleFunctions {
     /**
      * @dev - Enum representing the types of app config updates that can be made
-     * BROADCAST_STATUS_CHANGE - represents broadcasting status being updated
+     * SELF_BROADCAST_STATUS_CHANGE - represents self broadcasting status being updated
+     * GAS_EFFICIENT_BROADCAST_STATUS_CHANGE - represents that gas efficient broadcast status is being updated.
      * ORACLE_CHANGE - represents oracle address being updated
      * RELAYER_CHANGE - represents relayer address being updated
      * NONCE_CHANGE - represents the app's msg nonce being updated.
      */
     enum ConfigUpdateType {
-        BROADCAST_STATUS_CHANGE,
+        SELF_BROADCAST_STATUS_CHANGE,
+        GAS_EFFICIENT_BROADCAST_STATUS_CHANGE,
         ORACLE_CHANGE,
         RELAYER_CHANGE,
         NONCE_CHANGE
     }
 
     /**
-     * @dev - Struct that represent protocol fee settings
+     * @dev - Struct that represents the library module settings
+     * gasEfficientBroadcastingEnabled - bool indicating whether gas efficient broadcasting is enabled on the library module
      * feeOn - bool indicating whether protocol fees are on
      * feeTo - address indicating who protocol fees should be paid to.
      * collectInNativeToken - bool indicaitng whether protocol fees should be collected in native token.
      * nonNativeFeeToken - address indicating what non-native token protocol fees should be collected in if applicable.
      * amount - uint256 indicating amount of tokens that should be collected as fees.
      */
-    struct ProtocolFeeSettings {
+    struct LibraryModuleSettings {
+        bool gasEfficientBroadcastingEnabled;
         bool feeOn;
         address payable feeTo;
         bool collectInNativeToken;
@@ -43,11 +47,13 @@ interface ISharedSendModule is IRequiredSendModuleFunctions {
     /**
      * @dev - Struct that represents an app config within the shared send module
      * isSelfBroadcasting - bool on whether the app is self broadcasting or not.
+     * useGasEfficientBroadcasting - bool on whether the app wants the whole msg broadcasted or just the msg hash. Broadcasting the msg hash is more gas efficient.
      * oracleFeeCollector - address to which the app will pay oracle fees
      * relayerFeeCollector - address to which the app will pay relayer fees
      */
     struct AppConfig {
         bool isSelfBroadcasting;
+        bool useGasEfficientBroadcasting;
         address oracleFeeCollector;
         address relayerFeeCollector;
     }
@@ -87,11 +93,23 @@ interface ISharedSendModule is IRequiredSendModuleFunctions {
     );
 
     /**
+     * @dev - Event that broadcasts a message hash instead of the message.
+     * @param msgHash - bytes32 indicating the hash of the message we are broadcasting.
+     * msgHash is the hash of all the information that would have been emitted in a broadcastMessage event.
+     * i.e. keccak256(
+     *          abi.encode(
+     *              nonce, sender, senderInstanceId, receiver, receiverInstanceId, isOrderedMsg, destinationGas, payload, libraryId
+     *          )
+     *      )
+     */
+    event BroadcastMessageHash(bytes32 msgHash);
+
+    /**
      * @dev - Event emitted when you self broadcast a message
      * @param nonce - uint256 indicating the nonce of the message. The nonce is a unique number given to each message.
-     * @param senderInstanceId - bytes32 indicating the sender's endpoint instance Id.
+     * @param senderInstanceId - bytes32 indicating the sender's earlybird endpoint instance Id.
      * @param receiver - bytes array indicating the address of the receiver
-     * @param receiverInstanceId - bytes32 indicating the receiver's endpoint instance Id
+     * @param receiverInstanceId - bytes32 indicating the receiver's earlybird endpoint instance Id
      * @param isOrderedMsg - bool indicating whether message must be delivered in order or not.
      * @param destinationGas - uint256 indicating the amount of gas that the message should be delivered with on the destination.
      * @param payload - bytes array containing message payload
@@ -107,6 +125,18 @@ interface ISharedSendModule is IRequiredSendModuleFunctions {
         bytes payload,
         uint256 libraryId
     );
+
+    /**
+     * @dev - Event emitted when you self broadcast a message
+     * @param msgHash - bytes32 indicating the hash of the message we are broadcasting.
+     * msgHash is the hash of all the information that would have been emitted in a selfBroadcastMessage event.
+     * i.e. keccak256(
+     *          abi.encode(
+     *              nonce, senderInstanceId, receiver, receiverInstanceId, isOrderedMsg, destinationGas, payload, libraryId
+     *          )
+     *      )
+     */
+    event SelfBroadcastMessageHash(bytes32 msgHash);
 
     /**
      * @dev - Event emitted when you self broadcast a message

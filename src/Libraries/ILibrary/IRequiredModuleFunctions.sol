@@ -6,7 +6,7 @@ pragma solidity ^0.8.17;
  * @author - Orb Labs
  * @title  - IRequiredModuleFunctions
  * @notice - Interface for required functions for all library modules.
- *           These fuunctions are required becaused they are called by the endpoint.
+ *           These fuunctions are required becaused they are called by the earlybird endpoint.
  */
 interface IRequiredModuleFunctions {
     /**
@@ -26,22 +26,22 @@ interface IRequiredModuleFunctions {
     }
 
     /**
-     * @dev - Endpoint-only function that allows endpoint to pause library
+     * @dev - Endpoint-only function that allows earlybird endpoint to pause library
      */
     function pauseLibrary() external;
 
     /**
-     * @dev - Endpoint-only function that allows endpoint to unpause library
+     * @dev - Endpoint-only function that allows erlybird endpoint to unpause library
      */
     function unpauseLibrary() external;
 
     /**
-     * @dev - Endpoint-only function that allows endpoint to get the id of the library
+     * @dev - Endpoint-only function that allows earlybird endpoint to get the id of the library
      */
     function getLibraryId() external returns (uint256 libraryId);
 
     /**
-     * @dev - Endpoint-only function that allows endpoint to pass application configs to the library
+     * @dev - Endpoint-only function that allows earlybird endpoint to pass application configs to the library
      * @param _app - address of application passing the configs
      * @param _configs - bytes array containing encoded configs to be passed
      *                   to the library on the applications behalf
@@ -49,13 +49,13 @@ interface IRequiredModuleFunctions {
     function setAppConfigs(address _app, bytes memory _configs) external;
 
     /**
-     * @dev - Endpoint-only function that allows endpoint to retrieve an application configs in a library
+     * @dev - Endpoint-only function that allows earlybird endpoint to retrieve an application configs in a library
      * @param _app - address of application passing the configs
      */
     function getAppConfigs(address _app) external view returns (bytes memory);
 
     /**
-     * @dev - Endpoint-only function that allows endpoint to update an application's library configs
+     * @dev - Endpoint-only function that allows earlybird endpoint to update an application's library configs
      * @param _app - address of application passing the configs
      * @param _configs - bytes array containing encoded configs to be passed
      *                   to the library on the applications behalf
@@ -63,19 +63,19 @@ interface IRequiredModuleFunctions {
     function updateAppConfigs(address _app, bytes memory _configs) external;
 
     /**
-     * @dev - Endpoint-only function that allows endpoint to update settings for a library module.
-     * @param _libraryModuleSettings - bytes array containing encoded endpoint library module settings.
+     * @dev - Endpoint-only function that allows earlybird endpoint to update settings for a library module.
+     * @param _libraryModuleSettings - bytes array containing encoded earlybird endpoint library module settings.
      */
     function updateLibraryModuleSettings(bytes memory _libraryModuleSettings) external;
 
     /**
-     * @dev - Endpoint-only function that allows endpoint to retrieve the library's modules settings.
+     * @dev - Endpoint-only function that allows earlybird endpoint to retrieve the library's modules settings.
      * @return libraryModuleSettings - bytes array containing encoded library module settings
      */
     function getLibraryModuleSettings() external view returns (bytes memory libraryModuleSettings);
 
     /**
-     * @dev - Endpoint-only function that allows endpoint to retrieve the library's fee settings.
+     * @dev - Endpoint-only function that allows earlybird endpoint to retrieve the library's fee settings.
      * @return isProtocolFeeOn - boolean that says whether the protocol fee is on or not.
      * @return protocolFeeToken - address of the protocol fee token.
      *                            returns address(0) if fee is in native token.

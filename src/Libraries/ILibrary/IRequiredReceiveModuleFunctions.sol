@@ -8,7 +8,7 @@ import "./IRequiredModuleFunctions.sol";
  * @author - Orb Labs
  * @title  - IRequiredReceiveModuleFunctions
  * @notice - Interface for required receive module functions.
- *           These functions are mandatory because they are called by the Endpoint.
+ *           These functions are mandatory because they are called by the Earlybird Endpoint.
  */
 interface IRequiredReceiveModuleFunctions is IRequiredModuleFunctions {
     /**
@@ -27,7 +27,7 @@ interface IRequiredReceiveModuleFunctions is IRequiredModuleFunctions {
     }
 
     /**
-     * @dev - Function that allows the endpoint to get an applications receiveing nonce from the receive module.
+     * @dev - Function that allows the earlybird endpoint to get an applications receiveing nonce from the receive module.
      *        Each app has a different nonce for each sender on each earlybird instance from which it receives messages.
      * @param _app - address of the application that has been receiving the messages
      * @param _senderInstanceId - bytes32 indicating the id of the sender's earlybird instance
@@ -42,7 +42,7 @@ interface IRequiredReceiveModuleFunctions is IRequiredModuleFunctions {
      * @dev - Function returns whether a token is accepted for fees and the amount of the tokens
      *        the app would have to pay in fees for an already delivered message.
      * @param _receiverApp - Address of the app receiving the message.
-     * @param _senderInstanceId - bytes32 indicating the sender's endpoint instance Id
+     * @param _senderInstanceId - bytes32 indicating the sender's earlybird endpoint instance Id
      * @param _sender - bytes array indicating the address of the sender
      *                    (bytes is used since the sender can be on an EVM or non-EVM chain)
      * @param _payload - bytes array containing message payload
@@ -105,15 +105,15 @@ interface IRequiredReceiveModuleFunctions is IRequiredModuleFunctions {
         returns (bytes32 failedMsgHash, uint256 feeForFailedMessage, address relayerThatDeliveredMsg);
 
     /**
-     * @dev - Application-only function that allows the application to pay the fee for a delivered message on the receiver endpoint instead of the sender endpoint.
+     * @dev - Application-only function that allows the application to pay the fee for a delivered message on the receiver earlybird endpoint instead of the sender earlybird endpoint.
      *        Coupled with the sendMessageWithoutPayingFees(), apps should be able to send messages and pay on the destination.
      * @param _receiverApp - address indicating the app that received the message
-     * @param _senderInstanceId - bytes32 indicating the instance id of the endpoint that sent the message
+     * @param _senderInstanceId - bytes32 indicating the instance id of the earlybird endpoint that sent the message
      * @param _sender - bytes array indicating the address of the sender
      *                    (bytes is used since the sender can be on an EVM or non-EVM chain)
      * @param _nonce - uint256 indicating the nonce of the message
      * @param _payload - bytes array containing the message payload was delivered to the receiver
-     * @param _additionalParams - bytes array containing additional params application passed to the library on the sender endpoint.
+     * @param _additionalParams - bytes array containing additional params application passed to the library on the sender earlybird endpoint.
      */
     function payFeesForDeliveredMessage(
         address _receiverApp,
@@ -125,15 +125,15 @@ interface IRequiredReceiveModuleFunctions is IRequiredModuleFunctions {
     ) external payable;
 
     /**
-     * @dev - Application-only function that allows the application to bookmark or save the amount they owe in fees for a delivered message on the receiver endpoint.
+     * @dev - Application-only function that allows the application to bookmark or save the amount they owe in fees for a delivered message on the receiver earlybird endpoint.
      *        Allows the app to return and pay the amount bookmarked even if the fee has increased.
      * @param _receiverApp - address indicating the app that received the message whose fee was bookmarked
-     * @param _senderInstanceId - bytes32 indicating the instance id of the endpoint that sent the message
+     * @param _senderInstanceId - bytes32 indicating the instance id of the earlybird earlybird endpoint that sent the message
      * @param _sender - bytes array indicating the address of the sender
      *                    (bytes is used since the sender can be on an EVM or non-EVM chain)
      * @param _nonce - uint256 indicating the nonce of the message.
      * @param _payload - bytes array containing the message payload was delivered to the receiver
-     * @param _additionalParams - bytes array containing additional params application passed to the library on the sender endpoint.
+     * @param _additionalParams - bytes array containing additional params application passed to the library on the sender earlybird endpoint.
      * @return msgHash - the hash of the delivered msg whose fee was bookmarked
      */
     function bookmarkFeesForDeliveredMessage(

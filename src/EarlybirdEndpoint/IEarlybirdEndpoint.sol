@@ -1,24 +1,24 @@
-// src/Endpoint/IEndpoint/IEndpoint.sol
+// src/EarlybirdEndpoint/IEarlybirdEndpoint.sol
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
-import "./IEndpointFunctionsForAdmins.sol";
-import "./IEndpointFunctionsForApps.sol";
-import "./IEndpointFunctionsForLibraries.sol";
-import "./IEndpointGetFunctions.sol";
-import "../../Libraries/ILibrary/IRequiredReceiveModuleFunctions.sol";
-import "../../Libraries/ILibrary/IRequiredSendModuleFunctions.sol";
+import "./IEarlybirdEndpointFunctionsForAdmins.sol";
+import "./IEarlybirdEndpointFunctionsForApps.sol";
+import "./IEarlybirdEndpointFunctionsForLibraries.sol";
+import "./IEarlybirdEndpointGetFunctions.sol";
+import "../Libraries/ILibrary/IRequiredReceiveModuleFunctions.sol";
+import "../Libraries/ILibrary/IRequiredSendModuleFunctions.sol";
 
 /**
  * @author - Orb Labs
- * @title  - IEndpoint
- * @notice - Complete Interface for Endpoint.
+ * @title  - IEarlybirdEndpoint
+ * @notice - Complete Interface for an Earlybird Endpoint.
  */
-interface IEndpoint is
-    IEndpointFunctionsForAdmins,
-    IEndpointFunctionsForApps,
-    IEndpointFunctionsForLibraries,
-    IEndpointGetFunctions
+interface IEarlybirdEndpoint is
+    IEarlybirdEndpointFunctionsForAdmins,
+    IEarlybirdEndpointFunctionsForApps,
+    IEarlybirdEndpointFunctionsForLibraries,
+    IEarlybirdEndpointGetFunctions
 {
     /**
      * @dev - Enum representing library module types.
@@ -31,7 +31,7 @@ interface IEndpoint is
     }
 
     /**
-     * @dev - Struct representing an endpoint library
+     * @dev - Struct representing a library
      * libraryId - uint256 indicating the id of the library
      * iSendModule - interface of the library's send module
      * iReceiveModule - interfaces of the library's receive module

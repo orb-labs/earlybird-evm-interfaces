@@ -1,13 +1,13 @@
-// src/Endpoint/IEndpoint/IEndpointFunctionsForAdmins.sol
+// src/EarlybirdEndpoint/IEarlybirdEndpointFunctionsForAdmins.sol
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
 /**
  * @author - Orb Labs
- * @title  - IEndpointFunctionsForAdmins
- * @notice - Interface for Endpoint functions only the admin can call
+ * @title  - IEarlybirdEndpointFunctionsForAdmins
+ * @notice - Interface for Earlybird Endpoint functions only the admin can call
  */
-interface IEndpointFunctionsForAdmins {
+interface IEarlybirdEndpointFunctionsForAdmins {
     /**
      * @dev - Admin-only function that adds a new message library to the endpoint
      * @param _libraryName - string of the name of the library that is being added

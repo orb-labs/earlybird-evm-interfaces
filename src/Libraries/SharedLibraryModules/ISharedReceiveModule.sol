@@ -11,14 +11,14 @@ import "../ILibrary/IRequiredReceiveModuleFunctions.sol";
  */
 interface ISharedReceiveModule is IRequiredReceiveModuleFunctions {
     /**
-     * @dev - Struct that represent protocol fee settings
+     * @dev - Struct that represent the library module settings
      * feeOn - bool indicating whether protocol fees are on
      * feeTo - address indicating who protocol fees should be paid to.
      * collectInNativeToken - bool indicaitng whether protocol fees should be collected in native token.
      * nonNativeFeeToken - address indicating what non-native token protocol fees should be collected in if applicable.
      * amount - uint256 indicating amount of tokens that should be collected as fees.
      */
-    struct ProtocolFeeSettings {
+    struct LibraryModuleSettings {
         bool feeOn;
         address payable feeTo;
         bool collectInNativeToken;

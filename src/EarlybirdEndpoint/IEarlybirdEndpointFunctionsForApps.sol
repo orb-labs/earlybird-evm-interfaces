@@ -1,13 +1,13 @@
-// src/Endpoint/IEndpoint/IEndpointFunctionsForApps.sol
+// src/EarlybirdEndpoint/IEarlybirdEndpointFunctionsForApps.sol
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
 /**
  * @author - Orb Labs
- * @title  - IEndpointFunctionsForApps
+ * @title  - IEarlybirdEndpointFunctionsForApps
  * @notice - Interface for Endpoint functions only the application can call.
  */
-interface IEndpointFunctionsForApps {
+interface IEarlybirdEndpointFunctionsForApps {
     /**
      * @dev - Function to select a library and set app config for the library's
      *        send and receive module for a given application
