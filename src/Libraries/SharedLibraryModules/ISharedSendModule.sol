@@ -102,7 +102,7 @@ interface ISharedSendModule is IRequiredSendModuleFunctions {
      *          )
      *      )
      */
-    event BroadcastMessageHash(bytes32 msgHash);
+    event BroadcastMessageHash(uint256 nonce, bytes32 msgHash);
 
     /**
      * @dev - Event emitted when you self broadcast a message
@@ -136,7 +136,7 @@ interface ISharedSendModule is IRequiredSendModuleFunctions {
      *          )
      *      )
      */
-    event SelfBroadcastMessageHash(bytes32 msgHash);
+    event SelfBroadcastMessageHash(uint256 nonce, bytes32 msgHash);
 
     /**
      * @dev - Event emitted when you self broadcast a message
